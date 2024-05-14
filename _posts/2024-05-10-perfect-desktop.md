@@ -1,20 +1,17 @@
 ---
 layout: post
 title:  "The quest for the perfect desktop"
-date:   2024-05-10 17:29 -0700
 categories: technology linux
 ---
-# TL;DR
+TL;DR On my desktop PC I'm currently running Fedora Silverblue 40. Same on my laptop, but rebased to Sway Atomic.
 
-On my desktop PC I'm currently running Fedora Silverblue 40. Same on my laptop, but rebased to Sway Atomic.
-
-# A very long history in the making
+## A very long history in the making
 
 My first encounter with Unix was in the late 1980s, when I was formally trained in System V/68. There was this board with a Motorola 68000 CPU that could be inserted into a slot on the IBM PC which would convert it into a Unix server with enough capacity to support a small number of terminals, and the course was centered on that. At that time I was working as a software engineer for a company producing video display terminals, and so it made perfect sense for me to be there. Being familiar with CP/M, MS-DOS, and others, Unix seemed really sophisticated, yet simple to use.
 
 Fast forward to the late 1990s, I bought a copy of Red Hat Linux 6.1 and installed it on an old PC of mine that was already too weak to run Windows. It was disappointing to see that Red Hat Linux 6.2 was released a few days later, but what can you do? Eventually that PC broke for good and I moved on.
 
-## The Ubuntu years
+### The Ubuntu years
 
 I believe it was 2005 when I first heard about [Ubuntu][ubuntu], which was a brand new distro, and decided to give it a try.
 
@@ -30,7 +27,7 @@ Coming 2011, GNOME 3 was released. I didn't like it! It was a new paradigm that 
 
 By 2018, KDE Plasma 5 was well established and very pleasing to the eyes and to this user. Instead of [Kubuntu][kubuntu], I switched to [KDE neon][neon]. People at work questioned me on my choice, but the answer was simple. "Reputable company A has solid product A, fully open source with a well documented API. They want to integrate it with solid product B from reputable company B, which is also fully open source with a well documented API. Company B wants to do the same, that is, integrating their product with product B. Who does it better: A or B?" There is no clear winner, so it's all a matter of personal taste. At that particular time I was more interested in KDE, and that was my decision.
 
-## Distro hopping
+### Distro hopping
 
 At the heart of [KDE neon][neon] we had the trustworthy [Ubuntu][ubuntu], but certain things were just not working for me. Where was the problem: KDE or [Ubuntu][ubuntu]? I tried Xubuntu 18.10, just to make sure, and the same problems persisted. It was time to walk away.
 
@@ -44,7 +41,7 @@ Red Hat Linux was no more. I could either choose Red Hat Enterprise Linux or [Fe
 
 When [Red Hat/IBM built a paywall around CentOS Stream][centos], sending shockwaves across the open source industry, I felt inclined to walk away from [Fedora][fedora] and revisit other truly community supported distros. My first stop was with the venerable [Debian][debian]. Version 12 had just been released, with a significant number of improvements, and it looked very appealing to me. By that time, I was already excited, once again, to use GNOME, and so [Debian][debian] became my daily driver. It's heavily stable, which could also mean archaic, and some tools did seem a little outdated. Using [distrobox][dbox], I was able to overcome plenty of limitations.
 
-The problem with [Debian][debian] is that ***I*** am a bad user; the same applies to most other distros. Even though [distrobox][dbox] allowed me to safely bypass system limitations by installing programs on a containerized environment, sometimes it just felt *easier* to install on the root system. Over time, there were so many broken dependencies on the system that updates and new installations became rather painful. Backup tools such as [Snapper][snapper] and [Timeshift][timeshift] are fantastic for restoring configurations, but only for a short period of time; restoring a rather old configuration is impractical. The only reasonable approach was to reinstall the system and to remember to be disciplined.
+The problem with [Debian][debian] is that **I am a bad user**; the same applies to most other distros. Even though [distrobox][dbox] allowed me to safely bypass system limitations by installing programs on a containerized environment, sometimes it just felt *easier* to install on the root system. Over time, there were so many broken dependencies on the system that updates and new installations became rather painful. Backup tools such as [Snapper][snapper] and [Timeshift][timeshift] are fantastic for restoring configurations, but only for a short period of time; restoring a rather old configuration is impractical. The only reasonable approach was to reinstall the system and to remember to be disciplined.
 
 But if I had to start from scratch, I'd rather do something new. In comes [Arch Linux][arch]. Not a descendant, but the real thing. Installation was flawless, thanks to [Stephen's Tech Talks][stt] [example][guide], and in no time I had my desktop up and running. A few weeks later, after assuring myself of the system's stability, I proceeded to install [Arch Linux][arch] on my laptop.
 
@@ -54,7 +51,7 @@ I couldn't wait long, though. It became necessary to install a new application o
 
 And so I gave up. Having to reinstall systems over and over again is not for me anymore. I wanted something that could stick with me for years to come.
 
-## Time traveling
+### Time traveling
 
 I still am a bad user. That's why I believe that an immutable system would work best for me. [DistroWatch lists a number of immutable distros][immutable], but most of them lacked the level of maturity I needed. I tried [NixOS][nixos] and was very impressed by it, but some applications didn't behave they way they should. I also tried [openSUSE MicroOS][microos], but some of the components were still release candidates, which didn't give me the confidence I deserved from a stability stand point.
 
@@ -66,7 +63,7 @@ With everything working as it should, including some third party and proprietary
 
 Unless something goes terribly wrong (or something magical happens), there's no more distro hopping for me. For the foreseeable future, I'm staying with [Fedora atomic desktops][fedora].
 
-# Today
+## Today
 
 Even if not distro hopping anymore, I'm still compelled to hop from one desktop environment to another. I've rebased my laptop to Sericea (that's the name listed on the rebase tool, even though the website refers to it as Sway Atomic). It only took me a few minutes to do so, and none of my configurations and custom installed applications were lost. I've pinned my last successful Silverblue (GNOME) version so as not to lose it, for when I decide to go back. I just need to remember to pin the current version.
 
@@ -74,7 +71,7 @@ I've always known that GNOME and KDE Plasma were not meant to coexist, but what 
 
 After spending significant time on [dwm][suckless], I got used to automatic tiling. [Sway][sway], just like [i3][i3wm], forces me to remember the tiling scheme before opening a new window, or to rearrange the windows if the opposite scheme was in place. I stumbled on [Brodie's][brodie] [recommendation][recommend] by accident and installed [autotiling][auto], to my utterly joy.
 
-## About system updates
+### System updates
 
 Regardless of the distro I used, updating the system has always been aggravating. The system slows down to a crawl and, after the update, it's rather useless: either an application asks you to restart it, or it stops responding altogether. There were also times where the system somewhat *demanded* to be updated. On an atomic desktop, there's no such thing: the system updates itself automatically in the background, and you don't even notice, but the changes will only come into effect **after** you reboot your system.
 

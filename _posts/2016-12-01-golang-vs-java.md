@@ -1,12 +1,11 @@
 ---
 layout: post
 title:  "Are you GOing?"
-date:   2016-12-01 12:04 -0700
 categories: technology programming golang
 ---
 A few months ago I was exposed to Go, a new programming language (at least for me). Being well versed in some of the modern environments and frameworks, I usually don't pay much attention to new languages, unless there's something of interest to me. In this case, there was. In fact, there are some strong aspects in Go which I haven't seen as frequently.
 
-# I'm Sorry, World
+## I'm Sorry, World
 
 Whenever talking about a programming language, many authors refer to a hello program, which does nothing but say, "Hello, world!" It usually serves as a good starting point. I'm drinking from the same fountain… but the results are discouraging!
 
@@ -62,19 +61,19 @@ public class Hello {
 
 I've obtained comparable results on Windows and on Linux. Let me get this straight: one of the decision points to switch to Go should not be the executable file size.
 
-# Comparing to Java
+## Comparing to Java
 
 On the next sections I'll establish a brief comparison to Java, which is the language I mostly use at work.
 
 Java (and the Java virtual machine, for that matter) is very powerful and gives developers plenty of control. The downside is that, if you always do the same in a similar manner, then you're always adding more of the same code. From this perspective, Go simplifies the development process by implementing the same functionality in a more straightforward way. These are a few examples.
 
-## Multithreading
+### Multithreading
 
 Generally speaking, I refer to multithreading as the ability of a given program to do more than one thing at the same time (or, at the least, appear to be doing so). This is usually implemented by the run time environment, with or without support from the operating system.
 
 In Java, at the very least, you have two alternatives to accomplish this in your programs: by subclassing `Thread`, or by implementing the `Runnable` interface.
 
-### Subclass Thread
+#### Subclass Thread
 
 This is the basic skeleton:
 
@@ -96,7 +95,7 @@ There is room for any initialization code you need, and whatever code must be ex
 (new MyThread()).start();
 ```
 
-### Implement Runnable
+#### Implement Runnable
 
 The basic skeleton, as expected, is not too different:
 
@@ -118,7 +117,7 @@ Likewise, you can launch a new thread with:
 (new Thread(new MyRunnable())).start();
 ```
 
-### Goroutines
+#### Goroutines
 
 To accomplish multithreading in Go, you create *goroutines*, which follow a rather simple mechanism: you declare a function that contains the initialization and execution code, and run it asynchronously. For example:
 
@@ -147,11 +146,11 @@ go func() {
 
 Needless to say, as is the case on any functions, you can define and pass whatever parameters are required. Unfortunately you don't have this luxury in Java, as `start` and `run` are parameterless functions, so you have to resort to other mechanisms.
 
-## Synchronization
+### Synchronization
 
 In a multithreaded program, each thread runs in parallel with others. Often times it's required for a given thread to interact with others. There are multiple techniques for accomplishing this in Java, but I'm listing only two.
 
-### Bad Java
+#### Bad Java
 
 I've seen this in the past. It's bad but, despite its multiple disadvantages, gets the job done. You start by declaring a global flag to signal something has changed:
 
@@ -180,7 +179,7 @@ The only advantage I can see in this approach is that it's simple. Some of the d
 
 - **Wastes time and effort.** The monitoring thread will continue running even if there are no new events (flag remains false).
 
-### Better Java
+#### Better Java
 
 You can achieve faster response time and better performance by suspending the thread until a new event happens. For example, this should go in a `synchronized` block:
 
@@ -199,7 +198,7 @@ flag = true;
 notifyAll();
 ```
 
-### Channels
+#### Channels
 
 Go uses channels for establishing synchronized communication across goroutines. You can create a channel using `make(chan val-type [, size])`, optionally defining the number of values the channel can hold (in the case of buffered operations), and then use the `<-` operator for passing values to a channel and retrieving from it. For example:
 
@@ -213,6 +212,6 @@ n <- values  // get value from the channel
 
 Go will automatically take care of suspending any goroutines awaiting data from a channel.
 
-# Conclusion
+## Conclusion
 
 There is no conclusion! Just like development environments and application frameworks, no programming language is perfect. There is a space for Java, as much as there is space for .NET, Python, and PHP, and so there is also space for Go. Ultimate it's up to you to decide when and where to use it, but at least you have a good starting point.
