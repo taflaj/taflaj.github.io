@@ -3,7 +3,7 @@ layout: post
 title:  "The quest for the perfect desktop"
 categories: technology linux
 ---
-TL;DR On my desktop PC I'm currently running Fedora Silverblue 40. Same on my laptop, but rebased to Sway Atomic.
+On my desktop PC I'm currently running Fedora Silverblue 40. Same on my laptop, but rebased to Sway Atomic. It took me significant time and effort to come here, though.
 
 ## A very long history in the making
 
