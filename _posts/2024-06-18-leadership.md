@@ -25,7 +25,7 @@ The chef simply said, "Please make me a lemon risotto." They spent a few moments
 
 My observations:
 1. The chef and sous chef explored ways of incorporating the dish into the meal.
-1. The sous chef was able to add their skills, experience, and abilities into their work.
+1. The sous chef was able to add their skills, experience, and abilities into their work, therefore improving on the final product.
 1. The chef was able to continue their work without interruptions.
 1. It was a very effective way of using everyone's talents and maximizing the use of their time.
 
