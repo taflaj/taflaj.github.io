@@ -3,7 +3,9 @@ layout: post
 title:  "The quest for the perfect desktop"
 categories: technology linux
 ---
-On my desktop PC I'm currently running Fedora Silverblue 40. Same on my laptop, but rebased to Sway Atomic. It took me significant time and effort to come here, though.
+On my desktop PC I'm currently running Fedora Silverblue 41, rebased to Bluefin-DX. On my laptop I have dual boot: Windows 11 and Fedora Workstation 41 with hyprland. It took me significant time and effort to come here, though.
+
+<div style="background-color: #ccffcc; font-size: 0.8em">Last updated: 6 February 2025. Upgraded desktop from Fedora Silverblue 40 to 41 and rebased to Bluefin-DX. Got a new laptop with dual boot.</div>
 
 ## A very long history in the making
 
@@ -21,7 +23,7 @@ It was easy to configure.
 
 It was very easy to use.
 
-And so Ubuntu 4.10 became my daily driver, soon upgraded to 5.04 and to the versions that followed. It was somewhat easy to connect to my home computer from work, which proved to be useful. Although my wife was familiar with Windows, she had no trouble with Ubuntu and GNOME.
+And so Ubuntu 4.10 became my daily driver, soon upgraded to 5.04 and to the versions that followed. It was somewhat easy to connect to my home computer from work, which proved to be useful. Although my wife was familiar with Windows, she had no trouble with Ubuntu and GNOME 2.
 
 Coming 2011, GNOME 3 was released. I didn't like it! It was a new paradigm that I was not in favor of. KDE was too full of fluff, so I opted for Xfce, which was much simpler to use, had a familiar look and feel, and was low on resource consumption. I remained with [Xubuntu][xubuntu] for several years.
 
@@ -29,9 +31,9 @@ By 2018, KDE Plasma 5 was well established and very pleasing to the eyes and to 
 
 ### Distro hopping
 
-At the heart of [KDE neon][neon] we had the trustworthy [Ubuntu][ubuntu], but certain things were just not working for me. Where was the problem: KDE or [Ubuntu][ubuntu]? I tried Xubuntu 18.10, just to make sure, and the same problems persisted. It was time to walk away.
+At the heart of [KDE neon][neon] we had the trustworthy [Ubuntu][ubuntu], but certain things were just not working for me. Where was the problem: KDE or [Ubuntu][ubuntu]? I tried Xubuntu 18.10, just to make sure, and the same problems persisted. It was time to walk away from Ubuntu.
 
-In comes [Manjaro][manjaro]. I did not have the time, neither the patience, to set up [Arch Linux][arch], hence my choice. It worked very well for me for quite some time. People at work barely noted the difference. The resident expert warned me against using [Arch Linux][arch] or their descendants. Although the distro is quite stable, the [Arch User Repository (AUR)][aur] is anything but. There are too frequent and overwhelming updates, mostly to fix what they broke on a previous one. There was plenty of wealth within [AUR][aur] and I decided to take the risk. In effect, it was not rare for me to start a system update and realize that there were dozens (if not hundreds) of new packages. After a while, it became rather inconvenient.
+In comes [Manjaro][manjaro]. I did not have the time, neither the patience, to set up [Arch Linux][arch], hence my choice. It worked very well for me for quite some time. People at work barely noted the difference. The resident expert warned me against using [Arch Linux][arch] or their descendants. Although the distro is quite stable, the [Arch User Repository (AUR)][aur] is anything but. There are too frequent and overwhelming updates, mostly to fix what they broke on a previous release. There was plenty of wealth within [AUR][aur] and I decided to take the risk. In effect, it was not rare for me to start a system update and realize that there were dozens (if not hundreds) of new packages. After a while, it became rather inconvenient.
 
 The next several weeks were exhausting. Using [DistroWatch][distrowatch] as my guide, I tried [MX Linux][mx], [Linux Mint][mint], [AlmaLinux OS][alma] ([if it's good for CERN and Fermilab, then it must be good for me][cern]), and so many others, all of them with their pros and cons, and all of them with some little unique annoyance that would irritate me.
 
@@ -41,7 +43,7 @@ Red Hat Linux was no more. I could either choose Red Hat Enterprise Linux or [Fe
 
 When [Red Hat/IBM built a paywall around CentOS Stream][centos], sending shockwaves across the open source industry, I felt inclined to walk away from [Fedora][fedora] and revisit other truly community supported distros. My first stop was with the venerable [Debian][debian]. Version 12 had just been released, with a significant number of improvements, and it looked very appealing to me. By that time, I was already excited, once again, to use GNOME, and so [Debian][debian] became my daily driver. It's heavily stable, which could also mean archaic, and some tools did seem a little outdated. Using [distrobox][dbox], I was able to overcome plenty of limitations.
 
-The problem with [Debian][debian] is that **I am a bad user**; the same applies to most other distros. Even though [distrobox][dbox] allowed me to safely bypass system limitations by installing programs on a containerized environment, sometimes it just felt *easier* to install on the root system. Over time, there were so many broken dependencies on the system that updates and new installations became rather painful. Backup tools such as [Snapper][snapper] and [Timeshift][timeshift] are fantastic for restoring configurations, but only for a short period of time; restoring a rather old configuration is impractical. The only reasonable approach was to reinstall the system and to remember to be disciplined.
+The problem with [Debian][debian] is that **I am a bad user**; the same applies to most other distros. Even though [distrobox][dbox] allowed me to safely bypass system limitations by installing programs on a containerized environment, sometimes it just felt *easier* to install on the root system. Over time, there were so many broken dependencies on the system that updates and new installations became rather painful. Backup tools such as [Snapper][snapper] and [Timeshift][timeshift] are fantastic for restoring configurations, but only for a short period of time; restoring a rather old configuration is impractical. The only reasonable approach was to reinstall the system from scratch and to remember to be disciplined.
 
 But if I had to start from scratch, I'd rather do something new. In comes [Arch Linux][arch]. Not a descendant, but the real thing. Installation was flawless, thanks to [Stephen's Tech Talks][stt] [example][guide], and in no time I had my desktop up and running. A few weeks later, after assuring myself of the system's stability, I proceeded to install [Arch Linux][arch] on my laptop.
 
@@ -53,7 +55,7 @@ And so I gave up. Having to reinstall systems over and over again is not for me 
 
 ### Time traveling
 
-I still am a bad user. That's why I believe that an immutable system would work best for me. [DistroWatch lists a number of immutable distros][immutable], but most of them lacked the level of maturity I needed. I tried [NixOS][nixos] and was very impressed by it, but some applications didn't behave they way they should. I also tried [openSUSE MicroOS][microos], but some of the components were still release candidates, which didn't give me the confidence I deserved from a stability stand point.
+I still am a bad user. That's why I believe that an immutable or atomic system would work best for me. [DistroWatch lists a number of immutable distros][immutable], but most of them lacked the level of maturity I needed. I tried [NixOS][nixos] and was very impressed by it, but some applications didn't behave they way they should. I also tried [openSUSE MicroOS][microos], but some of the components were still release candidates, which didn't give me the confidence I deserved from a stability stand point.
 
 My next attempt was with [Fedora][fedora]. I had a copy of Fedora Silverblue 39, which I had tinkered with in the past. I had used it for experimenting only. Despite a few glitches, I was able to get [i3][i3wm], [hyprland][hypr], and even [dwm][suckless] running on it. Fedora 40 had just been released, so I downloaded it and proceeded to install it on the laptop. But it failed… Not interested in debugging it, I installed 39 (which I knew for a fact that it worked well) to later upgrade it to 40.
 
@@ -63,7 +65,19 @@ With everything working as it should, including some third party and proprietary
 
 Unless something goes terribly wrong (or something magical happens), there's no more distro hopping for me. For the foreseeable future, I'm staying with [Fedora atomic desktops][fedora].
 
-## Today
+### System updates
+
+Regardless of the distro I used, updating the system has always been aggravating. The system slows down to a crawl and, after the update, it's rather useless: either an application asks you to restart it, or it stops responding altogether. There were also times where the system somewhat *demanded* to be updated. On an atomic desktop, there's no such thing: the system updates itself automatically in the background, and you don't even notice, but the changes will only come into effect **after** you reboot your system.
+
+## 2 June 2024
+
+I'm having a serious problem on my desktop. The beauty of atomic distros is that all updates are in full. If anything goes wrong during the update, it's rolled back automatically. That's not the problem.
+
+The problem is that one such update went through to completion, but it rendered my desktop unusable. It had to do with [Wayland on Radeon graphics](https://gitlab.freedesktop.org/mesa/mesa/-/issues/11352). This affected not only Fedora, but everyone with a similar hardware configuration. Switching to another distro wouldn't cut it. I knew a solution was under way, but what could I do in the meantime? Using X11 instead of Wayland allowed me to continue working, but the computer became noticeably slow. Switching to Budgie, despite the smaller footprint, wasn't good enough either. Thankfully, collaborators on the [Fedora forum](https://discussion.fedoraproject.org/t/how-can-i-do-a-partial-silverblue-upgrade/123948) came to my rescue with a temporary fix. It demanded plenty of reconfiguration, along with setting up a Fedora container for building it. Under normal circumstances, I would have broken the system beyond repair, but due to its atomic nature, I could try and rollback numerous times until it's working for me.
+
+After a few days, a solution came in, and I was able to update my computer normally.
+
+## 5 October 2024
 
 Even if not distro hopping anymore, I'm still compelled to hop from one desktop environment to another. I've rebased my laptop to Sericea (that's the name listed on the rebase tool, even though the website refers to it as Sway Atomic). It only took me a few minutes to do so, and none of my configurations and custom installed applications were lost. I've pinned my last successful Silverblue (GNOME) version so as not to lose it, for when I decide to go back. I just need to remember to pin the current version.
 
@@ -71,17 +85,50 @@ I've always known that GNOME and KDE Plasma were not meant to coexist, but what 
 
 After spending significant time on [dwm][suckless], I got used to automatic tiling. [Sway][sway], just like [i3][i3wm], forces me to remember the tiling scheme before opening a new window, or to rearrange the windows if the opposite scheme was in place. I stumbled on [Brodie's][brodie] [recommendation][recommend] by accident and installed [autotiling][auto], to my utterly joy.
 
-### System updates
+## 29 October 2024
 
-Regardless of the distro I used, updating the system has always been aggravating. The system slows down to a crawl and, after the update, it's rather useless: either an application asks you to restart it, or it stops responding altogether. There were also times where the system somewhat *demanded* to be updated. On an atomic desktop, there's no such thing: the system updates itself automatically in the background, and you don't even notice, but the changes will only come into effect **after** you reboot your system.
+[Fedora 41](https://fedoramagazine.org/announcing-fedora-linux-41/) has been released: let's upgrade!
 
-Indeed, I'm happy to report that my computer is working exactly the way I want it.
+On a regular distro, upgrades take a few minutes. Once you reboot the computer, you have a new system. Much the same on an atomic distro, but with one difference: upgrades take several minutes. At one time, it took longer than 10 minutes, plus rebooting. There must be a better way!
+
+The way Fedora atomic is structured, you have the base system with everything it needs to function. Most other applications are installed as flatpaks, running in their own micro-container space. Some people hate flatpaks, but I'm cool with them.
+
+What about applications that aren't available as flatpaks? The solution Fedora uses is to layer them on top of the base system. It's all transparent for the end user, but with each new layer, updates take longer and longer. The solution is to enable the system to update itself automatically. I reboot my computer once a week, sometimes more often, other times less often, and the update time has become insignificant for me. The other part of the solution is to remind myself that installing non-flatpak applications is a time consuming process, so I'd rather do it when I can afford the wait.
+
+### hyprland
+
+For the end user, one major difference between Linux and Windows is that, on the latter, you're stuck with whatever Microsoft throws at you, while on the former you get to decide what the screen looks like. Among Linux users there is a constant debate on the best desktop environment. Some prefer GNONE, others prefer KDE/Plasma, not to mention Budgie and Xfce (and so many others).
+
+And then there are window managers, which are part of the desktop environment. There is an endless list. One particular kind are tiling managers, in which each new window takes all the space available on the screen, generally negotiating space with the other windows. The debate about the best window managers is also endless. At the end of the day, it comes down to: which one do you like the most?
+
+As of the time of this writing, my preference is GNOME on my desktop PC and [hyprland][hypr] on my laptop. That's what I'm used to.
+
+The problem with [hyprland][hypr] is that Fedora doesn't have it as an atomic standard, so it must be layered. Knowing that installation and configuration takes significant time, I reserved time for it.
+
+### Bluefin-DX
+
+With or without automatic updates, my workflow requires lots and lots of layers. As part of my work as application developer, software engineer, and systems administrator, I need a number of applications that aren't always available as flatpaks. The overhead is overwhelming. Pun intended. There must be a better way (again)!
+
+I've been following [Jorge Castro](https://www.youtube.com/@JorgeCastro) for a while. Part of his creation is [Universal Blue](https://ublue.it), where they decompose Silverblue and reassemble it using different configurations. They also provide a framework for creating your own custom atomic desktop. Eventually I might get to it.
+
+<mark>Attention: it's not a full blown distro. You don't get to install it. Instead, you install a standard atomic desktop and then rebase it to your creation.</mark>
+
+Meanwhile, I've found [Bluefin-DX](https://projectbluefin.io/). It's custom tailored for application development, coming pre-configured with Visual Studio Code for devcontainers, virtualization tools, development and administration tools, a Jurassic theme that would make my granddaughter happy, and so many other goodies. Beyond flatpak, it also comes with [Homebrew][brew] which, despite a few glitches, works very well.
+
+## 18 December 2024
+
+I have a new laptop: 13th Gen Intel i9-13900H with 32GB RAM. I need to keep Windows on it, but because Linux is also a requirement, I set it up for dual boot. Wherever you look it up, they say atomic desktops are not set up for dual booting. I did find, however, a number of examples of people who were able to make it work, but all my attempts failed. With no viable alternative, I opted for Fedora Workstation. Installation and configuration, as expected, proceeded without issues. I installed the flatpak applications mostly because I'm alreday used to them, and all other ones were installed normally; I don't see a need for [Homebrew][brew]. I obviously installed and configured [hyprland][hypr].
+
+Once my need for Windows goes away, I might erase it all and proceed to Silverblue (or whatever is hot). I might even install Windows on a virtual machine. Time will tell.
+
+Indeed, I'm happy to report that my computers are working exactly the way I want them.
 
 [alma]: https://almalinux.org/
 [arch]: https://archlinux.org/
 [arco]: https://arcolinux.com/
 [aur]: https://aur.archlinux.org/
 [auto]: https://github.com/nwg-piotr/autotiling
+[brew]: https://brew.sh/
 [brodie]: https://www.youtube.com/channel/UCld68syR8Wi-GY_n4CaoJGA
 [centos]: https://www.servethehome.com/ibm-red-hat-puts-rhel-source-behind-paywall/
 [cern]: https://www.businesswire.com/news/home/20230413005066/en/AlmaLinux-to-be-Used-by-CERN-and-Fermilab-in-Groundbreaking-Physics-Experiments
@@ -111,3 +158,10 @@ Indeed, I'm happy to report that my computer is working exactly the way I want i
 [ubuntu]: https://ubuntu.com/
 [upgrade]: https://docs.fedoraproject.org/en-US/fedora-silverblue/updates-upgrades-rollbacks/
 [xubuntu]: https://xubuntu.org/
+
+#### Revision history
+
+| Date | Description |
+| ---- | ----------- |
+| 2025-02-06 | Issues with an update. Upgrading to F41. Rebasing to Bluefin-DX. New laptop with dual boot. |
+| 2024-05-10 | Original posting date. |
