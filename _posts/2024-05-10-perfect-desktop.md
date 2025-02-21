@@ -2,10 +2,10 @@
 layout: post
 title:  "The quest for the perfect desktop"
 categories: technology linux
+date: 2024-05-10
+last_modified_at: 2025-02-20
 ---
 On my desktop PC I'm currently running Fedora Silverblue 41, rebased to Bluefin-DX. On my laptop I have dual boot: Windows 11 and Fedora Workstation 41 with hyprland. It took me significant time and effort to come here, though.
-
-<div style="background-color: #ccffcc; font-size: 0.8em">Last updated: 6 February 2025. Upgraded desktop from Fedora Silverblue 40 to 41 and rebased to Bluefin-DX. Got a new laptop with dual boot.</div>
 
 ## A very long history in the making
 
@@ -159,9 +159,10 @@ Indeed, I'm happy to report that my computers are working exactly the way I want
 [upgrade]: https://docs.fedoraproject.org/en-US/fedora-silverblue/updates-upgrades-rollbacks/
 [xubuntu]: https://xubuntu.org/
 
+---
+
 #### Revision history
 
-| Date | Description |
-| ---- | ----------- |
-| 2025-02-06 | Issues with an update. Upgrading to F41. Rebasing to Bluefin-DX. New laptop with dual boot. |
-| 2024-05-10 | Original posting date. |
+1. 2024-05-10: Original posting date.
+1. 2025-02-06: Issues with an update; upgrading to F41; rebasing to Bluefin-DX; new laptop with dual boot.
+1. 2025-02-20: Cosmetic details.
