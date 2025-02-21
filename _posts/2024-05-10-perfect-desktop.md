@@ -5,6 +5,7 @@ categories: technology linux
 date: 2024-05-10
 last_modified_at: 2025-02-20
 ---
+![My Perfect Desktop](/assets/images/desktop.jpg)
 On my desktop PC I'm currently running Fedora Silverblue 41, rebased to Bluefin-DX. On my laptop I have dual boot: Windows 11 and Fedora Workstation 41 with hyprland. It took me significant time and effort to come here, though.
 
 ## A very long history in the making

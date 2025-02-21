@@ -3,6 +3,7 @@ layout: post
 title:  "Cooking competitions and leadership"
 categories: leadership
 ---
+![A cooking competition](/assets/images/competition.webp)
 As I had mentioned in another article, half of what I learned about leadership came from watching cooking shows, particularly cooking competitions. This article is about one of my favorite examples.
 
 ## The competition

@@ -3,6 +3,7 @@ layout: post
 title:  "Functional programming in Python"
 categories: technology programming functional-programming python
 ---
+![python](/assets/images/python.webp)
 In this article I'm presenting a way of using functional programming in Python, highlighting some benefits and a few shortfalls. There are plenty of scholars out there; this is mostly a hobbyist's perspective, so please don't consider this to be the ultimate word.
 
 ## Declarative vs imperative programming
