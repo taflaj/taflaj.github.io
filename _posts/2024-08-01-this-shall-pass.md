@@ -3,9 +3,13 @@ layout: post
 title:  "This, too, shall pass"
 date: 2024-08-01
 categories: leadership unemployment
+excerpt_separator: <!--more-->
 ---
-![Out!](/assets/images/out.jpg)
+![Out!](/assets/images/out.jpeg)
+<div style="font-size: 0.8em; text-align: right">Image source: Gemini</div>
+
 No, it won't!
+<!--more-->
 
 ## Efficiencies
 

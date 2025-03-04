@@ -2,8 +2,12 @@
 layout: post
 title:  "To all my Colombian friends (old and new, past and present)"
 categories: personal friends colombia
+excerpt_separator: <!--more-->
 ---
+![CCH](/assets/images/CCH.jpeg)
+
 One of the biggest mantras in public speaking is that never, ever, under any circumstances, you should start a speech with an apology. The same applies to written speeches such as this.
+<!--more-->
 
 There are exceptions, though, such as this one. It has been a little over four decades since we've first met, and there was a significant gap between then and now. During this time, our vision of the world in general and of ourselves in particular has changed dramatically. Suddenly you realize you said things when you should have kept quiet. You also realize you should have said things but you kept quiet. That said: for all my words and silence, and actions and inactions, I humbly ask for your forgiveness.
 
