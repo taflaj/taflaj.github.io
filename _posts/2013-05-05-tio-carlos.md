@@ -2,8 +2,13 @@
 layout: post
 title:  "Tio Carlos descansou"
 categories: personal family brazil
+excerpt_separator: <!--more-->
 ---
+![Descansando](/assets/images/descanso.jpeg)
+<div style="font-size: 0.8em; text-align: right">Image source: Copilot</div>
+
 Eu não sabia que ele estava doente. Mesmo que soubesse com muita antecedência, não sei se um dia estaria suficientemente preparado para a notícia.
+<!--more-->
 
 O fato é que soube meio em cima da hora, com pouco tempo para planejar e me preparar. Ele teve câncer, que evoluiu de forma muito rápida. Até onde eu saiba, da hora que foi detectado até o momento final, passaram-se apenas algumas poucas semanas.
 

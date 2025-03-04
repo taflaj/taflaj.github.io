@@ -2,9 +2,14 @@
 layout: post
 title:  "Cooking competitions and leadership"
 categories: leadership
+date: 2024-06-18
+excerpt_separator: <!--more-->
 ---
-![A cooking competition](/assets/images/competition.webp)
+![A cooking competition](/assets/images/competition.jpeg)
+<div style="font-size: 0.8em; text-align: right">Image source: OpenAI</div>
+
 As I had mentioned in another article, half of what I learned about leadership came from watching cooking shows, particularly cooking competitions. This article is about one of my favorite examples.
+<!--more-->
 
 ## The competition
 

@@ -2,9 +2,14 @@
 layout: post
 title:  "Project managers and their batons"
 categories: unemployment business leadership project-management
+excerpt_separator: <!--more-->
+date: 2025-02-06
 ---
-![Conductor](/assets/images/conductor.jpg)
+![Conductor](/assets/images/conductor.jpeg)
+<div style="font-size: 0.8em; text-align: right">Image source: Gemini</div>
+
 When people ask me about the role of the project manager, the best paradigm I can think of is an orchestra conductor.
+<!--more-->
 
 ## In comes John Williams
 

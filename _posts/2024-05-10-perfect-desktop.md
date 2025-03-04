@@ -3,10 +3,13 @@ layout: post
 title:  "The quest for the perfect desktop"
 categories: technology linux
 date: 2024-05-10
-last_modified_at: 2025-02-20
+last_modified_at: 2025-03-04
+excerpt_separator: <!--more-->
 ---
 ![My Perfect Desktop](/assets/images/desktop.jpg)
-On my desktop PC I'm currently running Fedora Silverblue 41, rebased to Bluefin-DX. On my laptop I have dual boot: Windows 11 and Fedora Workstation 41 with hyprland. It took me significant time and effort to come here, though.
+
+On my desktop PC I'm currently running Fedora Silverblue 41, rebased to Bluefin-DX. On my laptop I have dual boot: Windows 11 and Fedora Workstation 41 with Hyprland. It took me significant time and effort to come here, though.
+<!--more-->
 
 ## A very long history in the making
 
@@ -58,7 +61,7 @@ And so I gave up. Having to reinstall systems over and over again is not for me 
 
 I still am a bad user. That's why I believe that an immutable or atomic system would work best for me. [DistroWatch lists a number of immutable distros][immutable], but most of them lacked the level of maturity I needed. I tried [NixOS][nixos] and was very impressed by it, but some applications didn't behave they way they should. I also tried [openSUSE MicroOS][microos], but some of the components were still release candidates, which didn't give me the confidence I deserved from a stability stand point.
 
-My next attempt was with [Fedora][fedora]. I had a copy of Fedora Silverblue 39, which I had tinkered with in the past. I had used it for experimenting only. Despite a few glitches, I was able to get [i3][i3wm], [hyprland][hypr], and even [dwm][suckless] running on it. Fedora 40 had just been released, so I downloaded it and proceeded to install it on the laptop. But it failed… Not interested in debugging it, I installed 39 (which I knew for a fact that it worked well) to later upgrade it to 40.
+My next attempt was with [Fedora][fedora]. I had a copy of Fedora Silverblue 39, which I had tinkered with in the past. I had used it for experimenting only. Despite a few glitches, I was able to get [i3][i3wm], [Hyprland][hypr], and even [dwm][suckless] running on it. Fedora 40 had just been released, so I downloaded it and proceeded to install it on the laptop. But it failed… Not interested in debugging it, I installed 39 (which I knew for a fact that it worked well) to later upgrade it to 40.
 
 As I was going over the [documentation][upgrade] and preparing for the upgrade, something caught my attention. If I wanted, I could travel back to 2017 to tinker with Fedora 27, or to the near future to try Fedora Testing or Fedora Updates, or even to the far future and experiment with Fedora Rawhide. All that without breaking my system? Count me in! But not today… Instead, I preferred to remain in 2024 and upgrade my laptop to Fedora Silverblue 40.
 
@@ -96,15 +99,15 @@ The way Fedora atomic is structured, you have the base system with everything it
 
 What about applications that aren't available as flatpaks? The solution Fedora uses is to layer them on top of the base system. It's all transparent for the end user, but with each new layer, updates take longer and longer. The solution is to enable the system to update itself automatically. I reboot my computer once a week, sometimes more often, other times less often, and the update time has become insignificant for me. The other part of the solution is to remind myself that installing non-flatpak applications is a time consuming process, so I'd rather do it when I can afford the wait.
 
-### hyprland
+### Hyprland
 
 For the end user, one major difference between Linux and Windows is that, on the latter, you're stuck with whatever Microsoft throws at you, while on the former you get to decide what the screen looks like. Among Linux users there is a constant debate on the best desktop environment. Some prefer GNONE, others prefer KDE/Plasma, not to mention Budgie and Xfce (and so many others).
 
 And then there are window managers, which are part of the desktop environment. There is an endless list. One particular kind are tiling managers, in which each new window takes all the space available on the screen, generally negotiating space with the other windows. The debate about the best window managers is also endless. At the end of the day, it comes down to: which one do you like the most?
 
-As of the time of this writing, my preference is GNOME on my desktop PC and [hyprland][hypr] on my laptop. That's what I'm used to.
+As of the time of this writing, my preference is GNOME on my desktop PC and [Hyprland][hypr] on my laptop. That's what I'm used to.
 
-The problem with [hyprland][hypr] is that Fedora doesn't have it as an atomic standard, so it must be layered. Knowing that installation and configuration takes significant time, I reserved time for it.
+The problem with [Hyprland][hypr] is that Fedora doesn't have it as an atomic standard, so it must be layered. Knowing that installation and configuration takes significant time, I reserved time for it.
 
 ### Bluefin-DX
 
@@ -118,11 +121,44 @@ Meanwhile, I've found [Bluefin-DX](https://projectbluefin.io/). It's custom tail
 
 ## 18 December 2024
 
-I have a new laptop: 13th Gen Intel i9-13900H with 32GB RAM. I need to keep Windows on it, but because Linux is also a requirement, I set it up for dual boot. Wherever you look it up, they say atomic desktops are not set up for dual booting. I did find, however, a number of examples of people who were able to make it work, but all my attempts failed. With no viable alternative, I opted for Fedora Workstation. Installation and configuration, as expected, proceeded without issues. I installed the flatpak applications mostly because I'm alreday used to them, and all other ones were installed normally; I don't see a need for [Homebrew][brew]. I obviously installed and configured [hyprland][hypr].
+I have a new laptop: 13th Gen Intel i9-13900H with 32GB RAM. I need to keep Windows on it, but because Linux is also a requirement, I set it up for dual boot. Wherever you look it up, they say atomic desktops are not set up for dual booting. I did find, however, a number of examples of people who were able to make it work, but all my attempts failed. With no viable alternative, I opted for Fedora Workstation. Installation and configuration, as expected, proceeded without issues. I installed the flatpak applications mostly because I'm alreday used to them, and all other ones were installed normally; I don't see a need for [Homebrew][brew]. I obviously installed and configured [Hyprland][hypr].
 
 Once my need for Windows goes away, I might erase it all and proceed to Silverblue (or whatever is hot). I might even install Windows on a virtual machine. Time will tell.
 
-Indeed, I'm happy to report that my computers are working exactly the way I want them.
+## 4 March 2025
+
+All is going well, but suddenly there's a new Fedora update and my laptop stops hibernating. The main difference is that I was running kernel version 6.12.13-200.fc41.x86_64, which was upgraded to 6.12.15-200.fc41.x86_64. Was there an issue with the upgrade? Did I do anything wrong? Because I have different kernel versions, I kept using the former until a new one becomes available.
+
+And that was 6.13.5-200.fc41.x86_64… and the laptop refuses to hibernate.
+
+### Power saving modes
+
+When you have a desktop computer, you turn it on, run all the programs you need, close them all, and turn the computer off.
+
+Or, if you're like me, leave it running permanently.
+
+On a laptop, you can do the same, but you have a third alternative, usually triggered by closing the lid. Depending on the software you're using or how you've configured it, your computer will stop responding.
+* **Sleep**. The computer is running, but all scheduled jobs and alerts are on hold.
+* **Suspend**. The computer stops and enters a power saving mode. It uses as little battery as possible, only to ensure the data is preserved.
+* **Hibernate**. The computer saves its current status to a swap file or partition on disk and powers itself off. When you turn it back on, it resumes from where you left off.
+
+There are advantages and disadvantages to each. Resuming after sleeping or suspending is quick, but both modes consume battery. Once you run out of power, the computer dies and you must restart from scratch. As for hibernating, it could take several minutes for the computer to save its state and power off, and then a few more to resume, but you can spend hours, days, or as long as you want, and no data is lost.
+
+### The problem
+
+On an average day, I have several programs running simultaneously: an email client (Thunderbird), one or more web browsers, several messengers, video conferencing, different terminals, and other tools. Occasionally I also use Visual Studio Code, either for software development or to maintain this blog, along with more supporting tools. The beauty of modern window managers and desktop environments is that I don't have to clutter my screen; instead, I can (and do) have different programs running in different, independent workspaces. When I turn the computer on, I have to open each program and move it to its workspace, and then I have to close them all before turning off, otherwise I could lose data.
+
+That's one reason I leave my desktop on at all times, but on my laptop that's impractical. The battery may not last until the following day (or week), so for me, hibernation is essential. I know it works well with 6.12.13-200.fc41.x86_64, so when powering up I need to make sure to choose this version.
+
+But it could become an annoyance. I posted a support request on the Fedora Discussion Board, but nobody was able to assist me. Next I raised a Bugzilla issue and am in touch with the Red Hat support team.
+
+### The solution
+
+As of the time of this writing, there is none. It is a known issue, but they have no plans of addressing it and that's the direction they want to go. The workaround is to hang on to 6.12.13-200.fc41.x86_64 for as long as I can.
+
+I wonder if [Arch Linux][arch] still supports hibernation? More to come on this.
+
+<!-- Indeed, I'm happy to report that my computers are working exactly the way I want them. -->
 
 [alma]: https://almalinux.org/
 [arch]: https://archlinux.org/
@@ -167,3 +203,4 @@ Indeed, I'm happy to report that my computers are working exactly the way I want
 1. 2024-05-10: Original posting date.
 1. 2025-02-06: Issues with an update; upgrading to F41; rebasing to Bluefin-DX; new laptop with dual boot.
 1. 2025-02-20: Cosmetic details.
+1. 2025-03-04: Fedora is no longer hibernating.

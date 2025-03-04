@@ -2,8 +2,13 @@
 layout: post
 title:  "Are you GOing?"
 categories: technology programming golang
+excerpt_separator: <!--more-->
 ---
+![GO](/assets/images/GO.jpeg)
+<div style="font-size: 0.8em; text-align: right">Image source: OpenAI</div>
+
 A few months ago I was exposed to Go, a new programming language (at least for me). Being well versed in some of the modern environments and frameworks, I usually don't pay much attention to new languages, unless there's something of interest to me. In this case, there was. In fact, there are some strong aspects in Go which I haven't seen as frequently.
+<!--more-->
 
 ## I'm Sorry, World
 
