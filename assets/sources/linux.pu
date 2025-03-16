@@ -1,0 +1,26 @@
+@startmindmap linux
+top to bottom direction
+* Linux
+** Arch
+*** EndeavourOS
+*** Garuda Linux
+*** Manjaro Linux
+**** BigLinux
+**** Mabox Linux
+** Debian
+*** Devuan
+*** LMDE
+*** MX Linux
+*** Ubuntu
+**** KDE Neon
+**** Kubuntu
+**** Linux Mint
+***** HamoniKR
+**** Pop! OS
+**** Xubuntu
+***** Ufficio Zero
+** Fedora
+*** Bazzite
+*** Qubes OS
+*** Ultramarine Linux
+@endmindmap
