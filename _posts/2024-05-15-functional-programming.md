@@ -3,21 +3,20 @@ layout: post
 title:  "Functional programming in Python"
 categories: technology programming functional-programming python
 date: 2024-05-15
+last_modified_at: 2025-03-16
 excerpt_separator: <!--more-->
 ---
 ![python](/assets/images/python.jpeg)
 <div style="font-size: 0.8em; text-align: right">Image source: OpenAI</div>
-
 In this article I'm presenting a way of using functional programming in Python, highlighting some benefits and a few shortfalls. There are plenty of scholars out there; this is mostly a hobbyist's perspective, so please don't consider this to be the ultimate word.
 <!--more-->
-
 ## Declarative vs imperative programming
 
-One difference between declarative and imperative programming is that, on the former, you tell the computer **what** to do, while on the latter you tell it **how** to do it. The examples below will give more clarity on this.
+One difference between declarative and imperative programming is that, on the former, you tell the computer <mark>what</mark> to do, while on the latter you tell it <mark>how</mark> to do it. The examples below will give more clarity on this.
 
 ### Object oriented programming
 
-OOP (for short) is one example of imperative programming. You model the data and behavior in classes and, at run time, the program instantiates classes into objects. A class can be viewed as the blueprint of the data you want to handle and how it should behave, while the objects are the data itself.
+OOP (for short) is one example of imperative programming. You model the data and behavior in classes and, on run time, the program instantiates classes into objects. A class can be viewed as the blueprint of the data you want to handle and how it should behave, while the objects are the data itself.
 
 Four basic principles of OOP:[^1] 
 - **Abstraction**: Modeling the relevant attributes and interactions of entities as classes to define an abstract representation of a system.
@@ -27,7 +26,7 @@ Four basic principles of OOP:[^1]
 
 [^1]: Source: [Microsoft: Object-Oriented programming (C#)](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/tutorials/oop)
 
-Even though Python does not fully implement all principles, **everything** in Python is an object. For example:
+Even though Python does not fully implement all principles, <mark>everything</mark> in Python is an object. For example:
 ```python
 >>> a=1
 >>> type(a)
@@ -43,7 +42,7 @@ FP (for short) is one example of declarative programming. These are a few princi
   - Functions return data or another function
   - No loops
   - Stateless (whenever the function runs, it's like it's running for the first time; in other words, given the same inputs, the output will always be the same)
-  - No side effects (when the function runs, **nothing** outside of its scope will change)
+  - No side effects (when the function runs, <mark>nothing</mark> outside of its scope will change)
 - Immutable values
   - Scalar variables are constant
   - If a function needs, for example, to alter an array, then instead it should make an altered copy of the array and return it
@@ -73,7 +72,7 @@ There are two side effects (`result` and `i`), both of which are mutable, and th
 factorial1(1558)
 ```
 
-    508 µs ± 95.8 µs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
+    319 μs ± 14.3 μs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
 
 
 Note: 1,558 is the largest input I could find that does not break the function.
@@ -92,10 +91,10 @@ def factorial2(n: int) -> int:
 factorial2(1558)
 ```
 
-    747 µs ± 175 µs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
+    438 μs ± 21.4 μs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
 
 
-It's roughly 50% slower, plus I had to add a limit (in this case, 1,558) to avoid a stack overflow.
+It's roughly 25% slower.
 
 Python allows us to define `lambda` functions, which also adhere to functional programming principles. Here's one way of writing the same function:
 
@@ -110,10 +109,10 @@ factorial3 = lambda n: 1 if n < 2 else n * factorial3(n-1)
 factorial3(1558)
 ```
 
-    611 µs ± 130 µs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
+    416 μs ± 13.3 μs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
 
 
-It's a tad faster than the previous example, still much slower than using imperative programming. Also, we're not measuring resource usage here, although we do know that recursion does consume memory.
+It's almost as fast as the previous example, and again much slower than using imperative programming. Also, we're not measuring resource usage here, although we do know that recursion does consume memory.
 
 ## Practical example \#2: the Fibonacci sequence
 
@@ -128,7 +127,7 @@ def fibonacci1(n: int) -> int:
     return a
 ```
 
-Likewise, there are **three** side effects (`a`, `b`, and `i`), all of which mutable, and one `for` loop.
+Likewise, there are three side effects (`a`, `b`, and `i`), all of which mutable, and one `for` loop.
 
 
 ```python
@@ -136,7 +135,7 @@ Likewise, there are **three** side effects (`a`, `b`, and `i`), all of which mut
 fibonacci1(20577)
 ```
 
-    4.85 ms ± 232 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+    3.78 ms ± 153 μs per loop (mean ± std. dev. of 7 runs, 100 loops each)
 
 
 Once again, 20,577 is that largest input I could find that does not break the function.
@@ -156,7 +155,7 @@ It becomes unbearably slow, as can be seen here (I tried a smaller number just t
 fibonacci3(30)
 ```
 
-    284 ms ± 41.4 ms per loop (mean ± std. dev. of 7 runs, 10 loops each)
+    82.5 ms ± 3.19 ms per loop (mean ± std. dev. of 7 runs, 10 loops each)
 
 
 For the sake of comparison, here's the timing when using the purely imperative approach.
@@ -167,7 +166,7 @@ For the sake of comparison, here's the timing when using the purely imperative a
 fibonacci1(30)
 ```
 
-    1.8 µs ± 485 ns per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
+    702 ns ± 158 ns per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
 
 
 ### A pinch of dynamic programming
@@ -176,7 +175,7 @@ The first problem with the Fibonacci sequence is that there are two recursions: 
 
 The other problem, maybe even worse, is that the function keeps recalculating the same value over and over again. As an example, what happens when we run `fibonacci3(30)`? It runs for 29, which runs for 28, 27, 26, etc. **and then** it runs for 28 **AGAIN**! Why can't we reuse what has been previously calculated?
 
-In comes dynamic programming. One of its principles is to break down a problem into smaller subproblems and solve them one at a time, and then solve the bigger one. In this case, we can use it as an optimization over plain recursion. Wherever we see a recursive solution that has repeated calls for same inputs, we can optimize it by using dynamic programming. The idea is to simply store the results of subproblems, so that we do not have to re-compute them when needed later. This simple optimization reduces time complexities from exponential to polynomial.[^3]
+In comes dynamic programming. One of its principles is to break down a problem into smaller subproblems and solve them on at a time, and then solve the bigger one. In this case, we can use it as an optimization over plain recursion. Wherever we see a recursive solution that has repeated calls for same inputs, we can optimize it using dynamic programming. The idea is to simply store the results of subproblems, so that we do not have to re-compute them when needed later. This simple optimization reduces time complexities from exponential to polynomial.[^3]
 
 [^3]: Source: [GeeksforGeeks: Dynamic Programming](https://www.geeksforgeeks.org/dynamic-programming/#)
 
@@ -191,7 +190,7 @@ def fibonacci4(n: int) -> int:
     return cache[n]
 ```
 
-Not only `cache` is mutable, but it's also a huge side effect, as it will linger forever. In Python, however, we could minimize the risk of another function altering `cache` by placing it on an external file.
+Not only `cache` is mutable, but it's also a huge side effect, as it will linger forever. In Python, however, we could minimize the risk of another function to alter `cache` by placing it on an external file.
 
 How does it perform? It's hard to determine the maximum amount at which it breaks, so I'll just use a number of my choice.
 
@@ -201,7 +200,7 @@ How does it perform? It's hard to determine the maximum amount at which it break
 fibonacci4(1000)
 ```
 
-    130 ns ± 11 ns per loop (mean ± std. dev. of 7 runs, 10,000,000 loops each)
+    43.7 ns ± 0.458 ns per loop (mean ± std. dev. of 7 runs, 10,000,000 loops each)
 
 
 For the sake of comparison, once again I present you the timing when using the purely imperative approach.
@@ -212,7 +211,7 @@ For the sake of comparison, once again I present you the timing when using the p
 fibonacci1(1000)
 ```
 
-    61.9 µs ± 3.83 µs per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
+    34.8 μs ± 417 ns per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
 
 
 The numbers speak for themselves: the dynamic programming examples runs in a fraction of the time used by other paradigms. This is because, most of the time, the function is just returning the value that had been previously calculated.
@@ -237,7 +236,7 @@ The technique we just used up here is called *memoization*. According to [Wikipe
 
 Fortunately for us, Python has plenty of rabbits we can hide in our hats. A [quick search online](https://duckduckgo.com/?q=memoization+python&t=newext&atb=v427-6&ia=web) will show us a number of possibilities, some built in, others we can build ourselves without having to recreate them over and over again.
 
-I, for one, prefer to keep things simple. On average, those who preceded me have spent significant time building an effective implementation of a comprehensive solution to a problem, and the best I can do is, at the least, evaluate their solution. Let's begin by having a look at `functools.lru_cache`:
+I, for one, prefer to keep things simple. On average, those who preceded me have spent significant time building effective implementations of a comprehensive solution to a problem, and the best I can do is, at the least, evaluate their solution. Let's begin by having a look at `functools.lru_cache`:
 
 
 ```python
@@ -254,7 +253,7 @@ def fibonacci2a(n : int) -> int:
 fibonacci2a(1000)
 ```
 
-    95 ns ± 14 ns per loop (mean ± std. dev. of 7 runs, 10,000,000 loops each)
+    40.6 ns ± 1.51 ns per loop (mean ± std. dev. of 7 runs, 10,000,000 loops each)
 
 
 Another possibility is to use `functools.cache`. The difference is that `cache` doesn't enforce a limit whilst `lru_cache` does.
@@ -274,14 +273,14 @@ def fibonacci2b(n : int) -> int:
 fibonacci2b(1000)
 ```
 
-    68.8 ns ± 3.07 ns per loop (mean ± std. dev. of 7 runs, 10,000,000 loops each)
+    39.1 ns ± 0.547 ns per loop (mean ± std. dev. of 7 runs, 10,000,000 loops each)
 
 
-The other difference, as can be seen here, is that `cache` is usually faster than `lru_cache` because, among other reasons, it doesn't have to manage limits. Care must be taken, though, because resource consumption could increase significantly (and it would be hard to pinpoint the root cause).
+The other difference is that `cache` could be faster than `lru_cache` because, among other reasons, it doesn't have to manage limits. Care must be taken, though, because resource consumption could increase significantly over time <mark>and it would be very hard to pinpoint the root cause</mark>.
 
-By the way, did you notice that the examples using `cache` and `lru_cache` ran faster than my previous code caching intermediate results myself (fibonacci4)?
+By the way, did you notice that the examples using `cache` and `lru_cache` ran faster than my previous code caching intermediate results internally (fibonacci4)?
 
-# The Golden Hammer antipattern
+## The Golden Hammer antipattern
 
 The Golden Hammer antipattern permeates from a development team's overreliance on a single tool set, pattern, platform, or other component of the development workflow. It is a classic pitfall that any team faces when they have gained some level of expertise in a particular solution or methodology. This antipattern is appropriately summarized using the following adage: "When all you have is a hammer, everything looks like a nail."[^4]
 
@@ -294,3 +293,12 @@ There are purely declarative programming languages. Likewise, there are purely i
 There are, nonetheless, multiparadigm programming languages. You'll have the option to choose how to write your code. Against the Golden Hammer antipattern, remember that you have multiple tools and techniques at your disposal, so do yourself a favor and choose the best one for solving the problem at hand.
 
 [^4]: Source: [TechTarget: Signs of a Golden Hammer antipattern, and 5 ways to avoid it](https://www.techtarget.com/searchapparchitecture/tip/Signs-of-a-Golden-Hammer-antipattern-and-ways-to-avoid-it)
+
+---
+
+#### Revision history
+
+1. 2024-05-15: Original posting date.
+2. 2025-03-16: New hardware.
+
+---
