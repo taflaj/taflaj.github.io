@@ -3,7 +3,7 @@ layout: post
 title:  "Functional programming in Python"
 categories: technology programming functional-programming python
 date: 2024-05-15
-last_modified_at: 2025-03-16
+last_modified_at: 2025-03-17
 excerpt_separator: <!--more-->
 ---
 ![python](/assets/images/python.jpeg)
@@ -72,7 +72,7 @@ There are two side effects (`result` and `i`), both of which are mutable, and th
 factorial1(1558)
 ```
 
-    319 μs ± 14.3 μs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
+    283 μs ± 275 ns per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
 
 
 Note: 1,558 is the largest input I could find that does not break the function.
@@ -91,7 +91,7 @@ def factorial2(n: int) -> int:
 factorial2(1558)
 ```
 
-    438 μs ± 21.4 μs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
+    372 μs ± 1.73 μs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
 
 
 It's roughly 25% slower.
@@ -109,7 +109,7 @@ factorial3 = lambda n: 1 if n < 2 else n * factorial3(n-1)
 factorial3(1558)
 ```
 
-    416 μs ± 13.3 μs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
+    374 μs ± 2.92 μs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
 
 
 It's almost as fast as the previous example, and again much slower than using imperative programming. Also, we're not measuring resource usage here, although we do know that recursion does consume memory.
@@ -135,7 +135,7 @@ Likewise, there are three side effects (`a`, `b`, and `i`), all of which mutable
 fibonacci1(20577)
 ```
 
-    3.78 ms ± 153 μs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+    3.39 ms ± 1.93 μs per loop (mean ± std. dev. of 7 runs, 100 loops each)
 
 
 Once again, 20,577 is that largest input I could find that does not break the function.
@@ -155,7 +155,7 @@ It becomes unbearably slow, as can be seen here (I tried a smaller number just t
 fibonacci3(30)
 ```
 
-    82.5 ms ± 3.19 ms per loop (mean ± std. dev. of 7 runs, 10 loops each)
+    73.4 ms ± 188 μs per loop (mean ± std. dev. of 7 runs, 10 loops each)
 
 
 For the sake of comparison, here's the timing when using the purely imperative approach.
@@ -166,7 +166,7 @@ For the sake of comparison, here's the timing when using the purely imperative a
 fibonacci1(30)
 ```
 
-    702 ns ± 158 ns per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
+    608 ns ± 44.1 ns per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
 
 
 ### A pinch of dynamic programming
@@ -200,7 +200,7 @@ How does it perform? It's hard to determine the maximum amount at which it break
 fibonacci4(1000)
 ```
 
-    43.7 ns ± 0.458 ns per loop (mean ± std. dev. of 7 runs, 10,000,000 loops each)
+    40.3 ns ± 0.236 ns per loop (mean ± std. dev. of 7 runs, 10,000,000 loops each)
 
 
 For the sake of comparison, once again I present you the timing when using the purely imperative approach.
@@ -211,7 +211,7 @@ For the sake of comparison, once again I present you the timing when using the p
 fibonacci1(1000)
 ```
 
-    34.8 μs ± 417 ns per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
+    32.7 μs ± 345 ns per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
 
 
 The numbers speak for themselves: the dynamic programming examples runs in a fraction of the time used by other paradigms. This is because, most of the time, the function is just returning the value that had been previously calculated.
@@ -253,7 +253,7 @@ def fibonacci2a(n : int) -> int:
 fibonacci2a(1000)
 ```
 
-    40.6 ns ± 1.51 ns per loop (mean ± std. dev. of 7 runs, 10,000,000 loops each)
+    36.1 ns ± 0.147 ns per loop (mean ± std. dev. of 7 runs, 10,000,000 loops each)
 
 
 Another possibility is to use `functools.cache`. The difference is that `cache` doesn't enforce a limit whilst `lru_cache` does.
@@ -273,12 +273,295 @@ def fibonacci2b(n : int) -> int:
 fibonacci2b(1000)
 ```
 
-    39.1 ns ± 0.547 ns per loop (mean ± std. dev. of 7 runs, 10,000,000 loops each)
+    35.5 ns ± 0.0418 ns per loop (mean ± std. dev. of 7 runs, 10,000,000 loops each)
 
 
 The other difference is that `cache` could be faster than `lru_cache` because, among other reasons, it doesn't have to manage limits. Care must be taken, though, because resource consumption could increase significantly over time <mark>and it would be very hard to pinpoint the root cause</mark>.
 
 By the way, did you notice that the examples using `cache` and `lru_cache` ran faster than my previous code caching intermediate results internally (fibonacci4)?
+
+## Functional programming is not perfect
+
+Reading [Athreya aka Maneshwar's article on object oriented versus functional programming](https://dev.to/lovestaco/object-oriented-programming-encapsulation-moving-parts-and-functional-paradigms-30d0) made me think of it a little bit deeper. Let's review some principles.
+
+### Functions must accept at least one argument
+
+In this case, we can't have a random number generator. We can have arguments specifying the type of number, its length, or range, but they aren't always required.
+
+Another example is file input and output. When opening a file, it makes sense to include file name, mode, type, etc. When closing it, though, all we need is a command to close; no other arguments should be required.
+
+### Stateless
+
+Given the same inputs, the output will always be the same. Really? For a random number generator, I definitely don't want to have the very same output over and over again. Even if it repeats itself, eventually I must get a different number.
+
+As for file handling, assuming I'm reading from a file that hasn't changed, then I'm always reading the same data. If the file changes, however, we're breaking this rule.
+
+The same applies to databases. After someone updates the database (which is usually expected), the data being read is no longer the same.
+
+### Scalar variables are constant
+
+All of the above is manageable and can be accepted, but if scalar variables must be constant, then there's no way we can implement a counter, for example.
+
+Here's a counter class:
+
+
+```python
+class Counter1:
+    def __init__(self) -> None:
+        self.counter = 0
+    def increment(self):
+        self.counter += 1
+        return self
+    def get(self) -> int:
+        return self.counter
+```
+
+The scalar variable `self.counter` is mutable and changes with every call to `increment`.
+
+
+```python
+c1 = Counter1()
+c1.get()
+```
+
+
+
+
+    0
+
+
+
+
+```python
+c1.increment().get()
+```
+
+
+
+
+    1
+
+
+
+
+```python
+c1.increment().get()
+```
+
+
+
+
+    2
+
+
+
+Subsequent calls will yield increasing numbers. No surprises here.
+
+Let's enforce the rule:
+
+
+```python
+class Counter2:
+    def __init__(self, value=0) -> None:
+        self.counter = value
+    def increment(self):
+        return Counter2(self.counter + 1)
+    def get(self) -> int:
+        return self.counter
+
+```
+
+The scalar variable `self.counter` is immutable. There is no provision to change it. Calling `increment` will, instead, instantiate a new object with a new, immutable, incremented value.
+
+
+```python
+c2 = Counter2()
+c2.get()
+```
+
+
+
+
+    0
+
+
+
+
+```python
+c2 = c2.increment()
+c2.get()
+```
+
+
+
+
+    1
+
+
+
+
+```python
+c2 = c2.increment()
+c2.get()
+```
+
+
+
+
+    2
+
+
+
+Subsequent calls will yield increasing numbers. No surprises here either… but there's a caveat: if we don't reassign the new object to a variable, we'll be working with stale data. For example:
+
+
+```python
+c2.increment().get()
+```
+
+
+
+
+    3
+
+
+
+
+```python
+c2.increment().get()
+```
+
+
+
+
+    3
+
+
+
+In this example, `c2` keeps pointing to the original object instead of the updated one. That's why it keeps returning the same value. Even worse, if we pass `c2` as an argument to another object, then for as long as the object is active, it will keep operating on obsolete data.
+
+#### Let's solve this (and prove myself wrong)
+
+Here's one way of doing it:
+
+
+```python
+class Hidden_Counter:
+    def __init__(self, value=0):
+        self.hidden_counter = value
+    def increment(self):
+        return Hidden_Counter(self.hidden_counter + 1)
+    def get(self):
+        return self.hidden_counter
+
+class Counter3:
+    def __init__(self):
+        self.counter = Hidden_Counter()
+    def increment(self):
+        self.counter = self.counter.increment()
+        return self.counter
+    def get(self):
+        return self.counter.get()
+```
+
+You add this code to a separate source file. Wherever you need to use it, you add `from <name> import Counter3`, which guarantees that `Hidden_Counter` remains hidden. `Hidden_Counter` keeps reinstatiating itself for every increment while `Counter3` keeps references intact.
+
+
+```python
+c3 = Counter3()
+c3.get()
+```
+
+
+
+
+    0
+
+
+
+
+```python
+c3.increment().get()
+```
+
+
+
+
+    1
+
+
+
+
+```python
+c3.increment().get()
+```
+
+
+
+
+    2
+
+
+
+You can do the same using inner classes.
+
+
+```python
+class Counter4:
+    class Hidden_Counter:
+        def __init__(self, value=0):
+            self.hidden_counter = value
+        def increment(self):
+            return Hidden_Counter(self.hidden_counter + 1)
+        def get(self):
+            return self.hidden_counter
+    def __init__(self):
+        self.counter = Hidden_Counter()
+    def increment(self):
+        self.counter = self.counter.increment()
+        return self.counter
+    def get(self):
+        return self.counter.get()
+```
+
+
+```python
+c4 = Counter4()
+c4.get()
+```
+
+
+
+
+    0
+
+
+
+
+```python
+c4.increment().get()
+```
+
+
+
+
+    1
+
+
+
+
+```python
+c4.increment().get()
+```
+
+
+
+
+    2
+
+
+
+No code outside of `Counter4` has any visibility of `Hidden_Counter`.
 
 ## The Golden Hammer antipattern
 
@@ -300,5 +583,11 @@ There are, nonetheless, multiparadigm programming languages. You'll have the opt
 
 1. 2024-05-15: Original posting date.
 2. 2025-03-16: New hardware.
+3. 2025-03-17: Problems with functional programming.
 
 ---
+
+
+```python
+
+```
