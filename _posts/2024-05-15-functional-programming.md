@@ -3,7 +3,7 @@ layout: post
 title:  "Functional programming in Python"
 categories: technology programming functional-programming python
 date: 2024-05-15
-last_modified_at: 2025-03-17
+last_modified_at: 2025-03-18
 excerpt_separator: <!--more-->
 ---
 ![python](/assets/images/python.jpeg)
@@ -72,7 +72,7 @@ There are two side effects (`result` and `i`), both of which are mutable, and th
 factorial1(1558)
 ```
 
-    283 μs ± 275 ns per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
+    308 μs ± 12.6 μs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
 
 
 Note: 1,558 is the largest input I could find that does not break the function.
@@ -91,7 +91,7 @@ def factorial2(n: int) -> int:
 factorial2(1558)
 ```
 
-    372 μs ± 1.73 μs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
+    407 μs ± 13.1 μs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
 
 
 It's roughly 25% slower.
@@ -109,7 +109,7 @@ factorial3 = lambda n: 1 if n < 2 else n * factorial3(n-1)
 factorial3(1558)
 ```
 
-    374 μs ± 2.92 μs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
+    403 μs ± 14.7 μs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
 
 
 It's almost as fast as the previous example, and again much slower than using imperative programming. Also, we're not measuring resource usage here, although we do know that recursion does consume memory.
@@ -135,7 +135,7 @@ Likewise, there are three side effects (`a`, `b`, and `i`), all of which mutable
 fibonacci1(20577)
 ```
 
-    3.39 ms ± 1.93 μs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+    3.67 ms ± 147 μs per loop (mean ± std. dev. of 7 runs, 100 loops each)
 
 
 Once again, 20,577 is that largest input I could find that does not break the function.
@@ -155,7 +155,7 @@ It becomes unbearably slow, as can be seen here (I tried a smaller number just t
 fibonacci3(30)
 ```
 
-    73.4 ms ± 188 μs per loop (mean ± std. dev. of 7 runs, 10 loops each)
+    78.9 ms ± 1.55 ms per loop (mean ± std. dev. of 7 runs, 10 loops each)
 
 
 For the sake of comparison, here's the timing when using the purely imperative approach.
@@ -166,7 +166,7 @@ For the sake of comparison, here's the timing when using the purely imperative a
 fibonacci1(30)
 ```
 
-    608 ns ± 44.1 ns per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
+    928 ns ± 278 ns per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
 
 
 ### A pinch of dynamic programming
@@ -200,7 +200,7 @@ How does it perform? It's hard to determine the maximum amount at which it break
 fibonacci4(1000)
 ```
 
-    40.3 ns ± 0.236 ns per loop (mean ± std. dev. of 7 runs, 10,000,000 loops each)
+    42.5 ns ± 0.907 ns per loop (mean ± std. dev. of 7 runs, 10,000,000 loops each)
 
 
 For the sake of comparison, once again I present you the timing when using the purely imperative approach.
@@ -211,7 +211,7 @@ For the sake of comparison, once again I present you the timing when using the p
 fibonacci1(1000)
 ```
 
-    32.7 μs ± 345 ns per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
+    35.4 μs ± 1.34 μs per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
 
 
 The numbers speak for themselves: the dynamic programming examples runs in a fraction of the time used by other paradigms. This is because, most of the time, the function is just returning the value that had been previously calculated.
@@ -253,7 +253,7 @@ def fibonacci2a(n : int) -> int:
 fibonacci2a(1000)
 ```
 
-    36.1 ns ± 0.147 ns per loop (mean ± std. dev. of 7 runs, 10,000,000 loops each)
+    38.7 ns ± 1.05 ns per loop (mean ± std. dev. of 7 runs, 10,000,000 loops each)
 
 
 Another possibility is to use `functools.cache`. The difference is that `cache` doesn't enforce a limit whilst `lru_cache` does.
@@ -273,7 +273,7 @@ def fibonacci2b(n : int) -> int:
 fibonacci2b(1000)
 ```
 
-    35.5 ns ± 0.0418 ns per loop (mean ± std. dev. of 7 runs, 10,000,000 loops each)
+    37.6 ns ± 0.98 ns per loop (mean ± std. dev. of 7 runs, 10,000,000 loops each)
 
 
 The other difference is that `cache` could be faster than `lru_cache` because, among other reasons, it doesn't have to manage limits. Care must be taken, though, because resource consumption could increase significantly over time <mark>and it would be very hard to pinpoint the root cause</mark>.
@@ -286,9 +286,7 @@ Reading [Athreya aka Maneshwar's article on object oriented versus functional pr
 
 ### Functions must accept at least one argument
 
-In this case, we can't have a random number generator. We can have arguments specifying the type of number, its length, or range, but they aren't always required.
-
-Another example is file input and output. When opening a file, it makes sense to include file name, mode, type, etc. When closing it, though, all we need is a command to close; no other arguments should be required.
+In this case, we can't have a random number generator. We can have arguments specifying the type of number, its length, or range, but depending on the implementation they aren't always required.
 
 ### Stateless
 
@@ -333,25 +331,13 @@ c1.get()
 
 
 ```python
-c1.increment().get()
+[c1.increment().get() for x in range(10)]
 ```
 
 
 
 
-    1
-
-
-
-
-```python
-c1.increment().get()
-```
-
-
-
-
-    2
+    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 
 
@@ -416,25 +402,13 @@ Subsequent calls will yield increasing numbers. No surprises here either… but 
 
 
 ```python
-c2.increment().get()
+[c2.increment().get() for x in range(10)]
 ```
 
 
 
 
-    3
-
-
-
-
-```python
-c2.increment().get()
-```
-
-
-
-
-    3
+    [3, 3, 3, 3, 3, 3, 3, 3, 3, 3]
 
 
 
@@ -481,25 +455,13 @@ c3.get()
 
 
 ```python
-c3.increment().get()
+[c3.increment().get() for x in range(10)]
 ```
 
 
 
 
-    1
-
-
-
-
-```python
-c3.increment().get()
-```
-
-
-
-
-    2
+    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 
 
@@ -539,29 +501,17 @@ c4.get()
 
 
 ```python
-c4.increment().get()
+[c4.increment().get() for x in range(10)]
 ```
 
 
 
 
-    1
+    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 
 
-
-```python
-c4.increment().get()
-```
-
-
-
-
-    2
-
-
-
-No code outside of `Counter4` has any visibility of `Hidden_Counter`.
+In many programming languages, no code outside of an enclosing class has any visibility of inner classes.
 
 ## The Golden Hammer antipattern
 
@@ -584,10 +534,6 @@ There are, nonetheless, multiparadigm programming languages. You'll have the opt
 1. 2024-05-15: Original posting date.
 2. 2025-03-16: New hardware.
 3. 2025-03-17: Problems with functional programming.
+4. 2025-03-18: Correcting my own mistakes.
 
 ---
-
-
-```python
-
-```
