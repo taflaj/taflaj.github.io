@@ -2,6 +2,7 @@
 layout: post
 title:  "This, too, shall pass"
 date: 2024-08-01
+last_modified_at: 2025-04-22
 categories: leadership unemployment
 excerpt_separator: <!--more-->
 ---
@@ -89,6 +90,8 @@ Dear all of the above, the role of the program/project/delivery manager is not t
 Dear former boss and coworker who can't see me on LinkedIn because I have blocked you, I remember what you said, what you did, and how you made me feel.
 
 Dear narcissistic boss, I refuse to refer to you as a leader. Your fancy house and your luxury car were bought with the money of all the people you terminated. Nothing screams 'despicable' louder than the bonuses you got that were supposed to purchase food, medications, or shelter for your ex-employees. Your day of reckoning is coming. When it happens, I'll be in the splash zone watching you. In case you don't recognize me, I'll be the one cheering against you, eating popcorn, and laughing profusely.
+
+Dear horrible boss with fancy job title and gigantic ego, you were quick at complaining about my performance even though there were no performance metrics and not a single performance evaluation. How can you say my performance was bad? You can't… but you do it because you don't need any proof and there's no accountability. You get away with it. You may even have sent me to the hospital, but you did not beat me. I'm still here and I'll make sure you regret it.
 
 ### Things I still can't say
 
