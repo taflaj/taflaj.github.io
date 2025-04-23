@@ -3,12 +3,12 @@ layout: post
 title:  "The quest for the perfect desktop"
 categories: technology linux
 date: 2024-05-10
-last_modified_at: 2025-03-04
+last_modified_at: 2025-04-23
 excerpt_separator: <!--more-->
 ---
-![My Perfect Desktop](/assets/images/desktop.jpg)
+[![My Perfect Desktop](/assets/images/desktop.jpg)](/perfect-desktop/)
 
-On my desktop PC I'm currently running Fedora Silverblue 41, rebased to Bluefin-DX. On my laptop I have dual boot: Windows 11 and Fedora Workstation 41 with Hyprland. It took me significant time and effort to come here, though.
+On my desktop PC I'm currently running Arch Linux with [MATE Desktop][mate]. On my laptop I have dual boot: Windows 11 and Arch Linux alternating between [KDE Plasma][kde] and [Hyprland][hypr]. It took me significant time and effort to come here, though.
 <!--more-->
 
 ## A very long history in the making
@@ -45,13 +45,13 @@ Red Hat Linux was no more. I could either choose Red Hat Enterprise Linux or [Fe
 
 [Fedora][fedora] was a great fit for me! There were frequent updates, but not overwhelmingly so. In fact, it was the perfect balance between advancements and stability.
 
-When [Red Hat/IBM built a paywall around CentOS Stream][centos], sending shockwaves across the open source industry, I felt inclined to walk away from [Fedora][fedora] and revisit other truly community supported distros. My first stop was with the venerable [Debian][debian]. Version 12 had just been released, with a significant number of improvements, and it looked very appealing to me. By that time, I was already excited, once again, to use GNOME, and so [Debian][debian] became my daily driver. It's heavily stable, which could also mean archaic, and some tools did seem a little outdated. Using [distrobox][dbox], I was able to overcome plenty of limitations.
+When [Red Hat/IBM built a paywall around CentOS Stream][centos], sending shockwaves across the open source industry, I felt inclined to walk away from [Fedora][fedora] and revisit other truly community supported distros. My first stop was with the venerable [Debian][debian]. Version 12 had just been released, with a significant number of improvements, and it looked very appealing to me. By that time, I was already excited, once again, to use GNOME, and so [Debian][debian] became my daily driver. It's heavily stable, which could also mean archaic, and some tools did seem a little outdated. Using [Distrobox][dbox], I was able to overcome plenty of limitations.
 
-The problem with [Debian][debian] is that **I am a bad user**; the same applies to most other distros. Even though [distrobox][dbox] allowed me to safely bypass system limitations by installing programs on a containerized environment, sometimes it just felt *easier* to install on the root system. Over time, there were so many broken dependencies on the system that updates and new installations became rather painful. Backup tools such as [Snapper][snapper] and [Timeshift][timeshift] are fantastic for restoring configurations, but only for a short period of time; restoring a rather old configuration is impractical. The only reasonable approach was to reinstall the system from scratch and to remember to be disciplined.
+The problem with [Debian][debian] is that **I am a bad user**; the same applies to most other distros. Even though [Distrobox][dbox] allowed me to safely bypass system limitations by installing programs on a containerized environment, sometimes it just felt *easier* to install on the root system. Over time, there were so many broken dependencies on the system that updates and new installations became rather painful. Backup tools such as [Snapper][snapper] and [Timeshift][timeshift] are fantastic for restoring configurations, but only for a short period of time; restoring a rather old configuration is impractical. The only reasonable approach was to reinstall the system from scratch and to remember to be disciplined.
 
 But if I had to start from scratch, I'd rather do something new. In comes [Arch Linux][arch]. Not a descendant, but the real thing. Installation was flawless, thanks to [Stephen's Tech Talks][stt] [example][guide], and in no time I had my desktop up and running. A few weeks later, after assuring myself of the system's stability, I proceeded to install [Arch Linux][arch] on my laptop.
 
-And then the problems began. Some tools I use were crashing. I tried both the AUR and the Flatpak versions, and got the same result. Did I make a mistake during the installation? Maybe… Let's try a descendant. [EndeavourOS][endeavouros], [ArcoLinux][arco], and [Garuda Linux][garuda] all yielded the very same result. It tells me the problem is inside [Arch Linux][arch]. Searching the forums did not give me any good answers. In any event, everything else was working, so for the next few weeks I'd work around these annoyances. I also kept any and all updates on the desktop on hold because I knew that eventually it would crash as well.
+<a id="past"></a>And then the problems began. Some tools I use were crashing. I tried both the AUR and the Flatpak versions, and got the same result. Did I make a mistake during the installation? Maybe… Let's try a descendant. [EndeavourOS][endeavouros], [ArcoLinux][arco], and [Garuda Linux][garuda] all yielded the very same result. It tells me the problem is inside [Arch Linux][arch]. Searching the forums did not give me any good answers. In any event, everything else was working, so for the next few weeks I'd work around these annoyances. I also kept any and all updates on the desktop on hold because I knew that eventually it would crash as well.
 
 I couldn't wait long, though. It became necessary to install a new application on the desktop, but the installer required a full system update. I crossed my fingers and went on with it. The behavior of the faulty tools improved and weren't crashing, which gave me some hope. Back on the laptop, I performed a new full system update and tried, once again, to install those tools. Most of them worked, except for one (obviously the most critical one).
 
@@ -101,7 +101,7 @@ What about applications that aren't available as flatpaks? The solution Fedora u
 
 ### Hyprland
 
-For the end user, one major difference between Linux and Windows is that, on the latter, you're stuck with whatever Microsoft throws at you, while on the former you get to decide what the screen looks like. Among Linux users there is a constant debate on the best desktop environment. Some prefer GNONE, others prefer KDE/Plasma, not to mention Budgie and Xfce (and so many others).
+For the end user, one major difference between Linux and Windows is that, on the latter, you're stuck with whatever Microsoft throws at you, while on the former you get to decide what the screen looks like. Among Linux users there is a constant debate on the best desktop environment. Some prefer GNOME, others prefer KDE/Plasma, not to mention Budgie and Xfce (and so many others).
 
 And then there are window managers, which are part of the desktop environment. There is an endless list. One particular kind are tiling managers, in which each new window takes all the space available on the screen, generally negotiating space with the other windows. The debate about the best window managers is also endless. At the end of the day, it comes down to: which one do you like the most?
 
@@ -158,7 +158,29 @@ As of the time of this writing, there is none. It is a known issue, but they hav
 
 I wonder if [Arch Linux][arch] still supports hibernation? More to come on this.
 
-<!-- Indeed, I'm happy to report that my computers are working exactly the way I want them. -->
+## 23 April 2025
+
+I saw [Cody Hou](https://www.codyhou.com/)'s post about [Arch Linux installation](https://www.codyhou.com/arch-encrypt-swap/) and decided to give it another try. Along with other sources I saw online, my goal was to install Arch with BTRFS, encryption, swap, snapshots, Snapper (instead of TimeShift), and dual boot. Did I mention hibernation?
+
+My 12 year old faithful desktop with 4th Gen Intel i7-4770 3.90 GHz and 16GB RAM is too weak for fancy desktop environments. Tiling window managers are great for laptops, but not necessarily for desktops (just my opinion), so I opted for [MATE Desktop][mate]. There's a familiar look and feel to it, which would make it easy for my wife to navigate it when needed, and it performs very well in spite of the heavy burden I lay on it.
+
+### A ghost from the past
+
+As for my laptop, the [problem I had in the past](#past "apps keep crashing") had to do with Dropbox. It uses the system tray for configuration and status indication, but GNOME had disabled it in the past. Extensions like [AppIndicator and KStatusNotifierItem](https://extensions.gnome.org/extension/615/appindicator-support/) fill in the gap… but only to an extent. Particularly with GNOME 48, I had to rely on [Status Icons](https://extensions.gnome.org/extension/7332/status-icons/), but it wasn't good enough either. The computer would crash as soon as Dropbox starts running. With some effort, I could have the computer ressuscitate after the crash, but the indicator was not present. How could I be sure it was running at all? What about alerts?
+
+Fortunately for me, Dropbox ran flawlessly with Hyprland. Same with MATE. Problem solved.
+
+### A ghost from the present
+
+For my professional and volunteer work, I use Zoom with different accounts. Switching between them on Hyprland was making it crash. A solution I found was to replace GNOME with KDE Plasma. Dropbox and Zoom are running perfectly, as well as some of the other critical tools and applications I need. I do miss the Hyprland navigation, but I can switch to it any time without issues.
+
+### Weird screenshot
+
+Did you find anything unusual about the picture on the top of this page? On the top left quadrant we see [fastfetch][fastfetch] reporting Arch Linux, but on the bottom right it shows [Kubuntu][kubuntu]. How's that possible? Let me assure you: for this screenshot, I did not remote into another computer; it was all local.
+
+The trick is that, as I had mentioned so many times, I'm a bad user. I don't want to overload my computer with tools I use sporadically, such as Ruby and Jekyll for maintaining this blog. It would add unwanted burden to the frequent upgrades. To solve this, I'm using [Distrobox][dbox]. I created an Ubuntu container and loaded it with the necessary tools. Any system upgrades won't affect the container, and I can upgrade the container whenever needed without affecting the computer as a whole.
+
+Indeed, I'm happy to report that my computers are working exactly the way I want them.
 
 [alma]: https://almalinux.org/
 [arch]: https://archlinux.org/
@@ -173,14 +195,17 @@ I wonder if [Arch Linux][arch] still supports hibernation? More to come on this.
 [debian]: https://www.debian.org/
 [distrowatch]: https://distrowatch.com/
 [endeavouros]: https://endeavouros.com/
+[fastfetch]: https://github.com/fastfetch-cli/fastfetch
 [fedora]: https://fedoraproject.org/
 [garuda]: https://garudalinux.org/
 [guide]: https://www.youtube.com/watch?v=zQQN3Pj4K0Y
 [hypr]: https://hyprland.org/
 [i3wm]: https://i3wm.org/
 [immutable]: https://distrowatch.com/search.php?category=Immutable#simple
+[kde]: https://kde.org/
 [kubuntu]: https://kubuntu.org/
 [manjaro]: https://manjaro.org/
+[mate]: https://mate-desktop.org/
 [microos]: https://microos.opensuse.org/
 [mint]: https://www.linuxmint.com/
 [mx]: https://mxlinux.org/
@@ -204,3 +229,4 @@ I wonder if [Arch Linux][arch] still supports hibernation? More to come on this.
 1. 2025-02-06: Issues with an update; upgrading to F41; rebasing to Bluefin-DX; new laptop with dual boot.
 1. 2025-02-20: Cosmetic details.
 1. 2025-03-04: Fedora is no longer hibernating.
+1. 2025-04-23: Arch (by the way).
