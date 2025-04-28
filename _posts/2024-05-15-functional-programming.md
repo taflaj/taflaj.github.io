@@ -3,10 +3,10 @@ layout: post
 title:  "Functional programming in Python"
 categories: technology programming functional-programming python
 date: 2024-05-15
-last_modified_at: 2025-03-18
+last_modified_at: 2025-04-28
 excerpt_separator: <!--more-->
 ---
-![python](/assets/images/python.jpeg)
+[![python](/assets/images/python.jpeg)](/functional-programming/)
 <div style="font-size: 0.8em; text-align: right">Image source: OpenAI</div>
 In this article I'm presenting a way of using functional programming in Python, highlighting some benefits and a few shortfalls. There are plenty of scholars out there; this is mostly a hobbyist's perspective, so please don't consider this to be the ultimate word.
 <!--more-->
@@ -16,7 +16,7 @@ One difference between declarative and imperative programming is that, on the fo
 
 ### Object oriented programming
 
-OOP (for short) is one example of imperative programming. You model the data and behavior in classes and, on run time, the program instantiates classes into objects. A class can be viewed as the blueprint of the data you want to handle and how it should behave, while the objects are the data itself.
+OOP (for short) is one example of imperative programming. You model the data and behavior in classes and, during run time, the program instantiates classes into objects. A class can be viewed as the blueprint of the data you want to handle and how it should behave, while the objects contain the data itself.
 
 Four basic principles of OOP:[^1] 
 - **Abstraction**: Modeling the relevant attributes and interactions of entities as classes to define an abstract representation of a system.
@@ -47,9 +47,25 @@ FP (for short) is one example of declarative programming. These are a few princi
   - Scalar variables are constant
   - If a function needs, for example, to alter an array, then instead it should make an altered copy of the array and return it
 - Referential transparency
-  - An expression is called *referentially transparent* if it can be replaced with its corresponding value (and vice-versa) without changing the program's behavior. This requires that the expression be pure: its value must be the same for the same inputs and its evaluation must have no side effects. An expression that is not referentially transparent is called *referentially opaque*.[^2]
+  - An expression is called *referentially transparent* if it can be replaced with its corresponding value (and vice-versa) without changing the program's behavior. This requires that the expression be pure: its value must be the same for the same inputs and its evaluation must have no side effects.
+    - An expression that is not referentially transparent is called *referentially opaque*.[^2]
 
-[^2]: Source: [Wikipedia: Referential transparency](https://en.wikipedia.org/wiki/Referential_transparency)
+[^2]: Source: [Wikipedia: Referential transparency](https://en.wikipedia.org/wiki/Referential_transparency
+
+Note: for reference, this is the Python version I'm using:
+
+
+```python
+import sys
+sys.version
+```
+
+
+
+
+    '3.13.3 (main, Apr  9 2025, 07:44:25) [GCC 14.2.1 20250207]'
+
+
 
 ## Practical example \#1: factorials
 
@@ -72,10 +88,12 @@ There are two side effects (`result` and `i`), both of which are mutable, and th
 factorial1(1558)
 ```
 
-    308 μs ± 12.6 μs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
+    281 μs ± 514 ns per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
 
 
-Note: 1,558 is the largest input I could find that does not break the function.
+Notes:
+1. Timings are empirical and non-deterministic.
+2. 1,558 is the largest input I could find that does not break the function.
 
 Here's the same function, this time using functional programming principles:
 
@@ -91,10 +109,10 @@ def factorial2(n: int) -> int:
 factorial2(1558)
 ```
 
-    407 μs ± 13.1 μs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
+    375 μs ± 772 ns per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
 
 
-It's roughly 25% slower.
+It's more than 25% slower.
 
 Python allows us to define `lambda` functions, which also adhere to functional programming principles. Here's one way of writing the same function:
 
@@ -109,10 +127,10 @@ factorial3 = lambda n: 1 if n < 2 else n * factorial3(n-1)
 factorial3(1558)
 ```
 
-    403 μs ± 14.7 μs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
+    375 μs ± 873 ns per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
 
 
-It's almost as fast as the previous example, and again much slower than using imperative programming. Also, we're not measuring resource usage here, although we do know that recursion does consume memory.
+It's similar to the previous example, and again much slower than using imperative programming. Also, we're not measuring resource usage here, although it's known that recursion does consume memory.
 
 ## Practical example \#2: the Fibonacci sequence
 
@@ -135,10 +153,10 @@ Likewise, there are three side effects (`a`, `b`, and `i`), all of which mutable
 fibonacci1(20577)
 ```
 
-    3.67 ms ± 147 μs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+    3.38 ms ± 10 μs per loop (mean ± std. dev. of 7 runs, 100 loops each)
 
 
-Once again, 20,577 is that largest input I could find that does not break the function.
+Once again, 20,577 is the largest input I could find that does not break the function.
 
 Let's try a purely functional approach to the Fibonacci sequence.
 
@@ -155,7 +173,7 @@ It becomes unbearably slow, as can be seen here (I tried a smaller number just t
 fibonacci3(30)
 ```
 
-    78.9 ms ± 1.55 ms per loop (mean ± std. dev. of 7 runs, 10 loops each)
+    64.9 ms ± 147 μs per loop (mean ± std. dev. of 7 runs, 10 loops each)
 
 
 For the sake of comparison, here's the timing when using the purely imperative approach.
@@ -166,8 +184,10 @@ For the sake of comparison, here's the timing when using the purely imperative a
 fibonacci1(30)
 ```
 
-    928 ns ± 278 ns per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
+    584 ns ± 38.8 ns per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
 
+
+Much faster, indeed.
 
 ### A pinch of dynamic programming
 
@@ -179,7 +199,7 @@ In comes dynamic programming. One of its principles is to break down a problem i
 
 [^3]: Source: [GeeksforGeeks: Dynamic Programming](https://www.geeksforgeeks.org/dynamic-programming/#)
 
-Here's one implementation:
+Here's one quick and dirty implementation:
 
 
 ```python
@@ -200,7 +220,7 @@ How does it perform? It's hard to determine the maximum amount at which it break
 fibonacci4(1000)
 ```
 
-    42.5 ns ± 0.907 ns per loop (mean ± std. dev. of 7 runs, 10,000,000 loops each)
+    37.5 ns ± 0.0837 ns per loop (mean ± std. dev. of 7 runs, 10,000,000 loops each)
 
 
 For the sake of comparison, once again I present you the timing when using the purely imperative approach.
@@ -211,12 +231,12 @@ For the sake of comparison, once again I present you the timing when using the p
 fibonacci1(1000)
 ```
 
-    35.4 μs ± 1.34 μs per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
+    31.5 μs ± 422 ns per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
 
 
-The numbers speak for themselves: the dynamic programming examples runs in a fraction of the time used by other paradigms. This is because, most of the time, the function is just returning the value that had been previously calculated.
+The numbers speak for themselves: the dynamic programming example runs in a fraction of the time used by other paradigms. This is because, most of the time, the function is just returning the value that had been previously calculated.
 
-In case you were wondering, the cache is, indeed, preserved between runs.
+In case you were wondering, the cache is, indeed, preserved between runs, therefore constituting a side effect.
 
 
 ```python
@@ -253,7 +273,7 @@ def fibonacci2a(n : int) -> int:
 fibonacci2a(1000)
 ```
 
-    38.7 ns ± 1.05 ns per loop (mean ± std. dev. of 7 runs, 10,000,000 loops each)
+    34.6 ns ± 0.0506 ns per loop (mean ± std. dev. of 7 runs, 10,000,000 loops each)
 
 
 Another possibility is to use `functools.cache`. The difference is that `cache` doesn't enforce a limit whilst `lru_cache` does.
@@ -273,10 +293,10 @@ def fibonacci2b(n : int) -> int:
 fibonacci2b(1000)
 ```
 
-    37.6 ns ± 0.98 ns per loop (mean ± std. dev. of 7 runs, 10,000,000 loops each)
+    35 ns ± 0.0798 ns per loop (mean ± std. dev. of 7 runs, 10,000,000 loops each)
 
 
-The other difference is that `cache` could be faster than `lru_cache` because, among other reasons, it doesn't have to manage limits. Care must be taken, though, because resource consumption could increase significantly over time <mark>and it would be very hard to pinpoint the root cause</mark>.
+The other difference is that `cache` could be faster than `lru_cache` because, among other reasons, it doesn't manage limits. Care must be taken, though, because resource consumption could increase significantly over time <mark>and it would be very hard to pinpoint the root cause</mark>.
 
 By the way, did you notice that the examples using `cache` and `lru_cache` ran faster than my previous code caching intermediate results internally (fibonacci4)?
 
@@ -535,5 +555,6 @@ There are, nonetheless, multiparadigm programming languages. You'll have the opt
 2. 2025-03-16: New hardware.
 3. 2025-03-17: Problems with functional programming.
 4. 2025-03-18: Correcting my own mistakes.
+5. 2025-04-28: Spell check.
 
 ---
