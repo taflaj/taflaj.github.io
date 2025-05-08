@@ -3,12 +3,12 @@ layout: post
 title:  "The quest for the perfect desktop"
 categories: technology linux
 date: 2024-05-10
-last_modified_at: 2025-04-23
+last_modified_at: 2025-05-08
 excerpt_separator: <!--more-->
 ---
 [![My Perfect Desktop](/assets/images/desktop.jpg)](/perfect-desktop/)
 
-On my desktop PC I'm currently running Arch Linux with [MATE Desktop][mate]. On my laptop I have dual boot: Windows 11 and Arch Linux alternating between [KDE Plasma][kde] and [Hyprland][hypr]. It took me significant time and effort to come here, though.
+On my desktop PC I'm currently running Arch Linux with [MATE Desktop][mate]. On my laptop I have [Fedora Silverblue][fedora] rebased to [Aurora DX][aurora]. It took me significant time and effort to come here, though.
 <!--more-->
 
 ## A very long history in the making
@@ -37,7 +37,7 @@ By 2018, KDE Plasma 5 was well established and very pleasing to the eyes and to 
 
 At the heart of [KDE neon][neon] we had the trustworthy [Ubuntu][ubuntu], but certain things were just not working for me. Where was the problem: KDE or [Ubuntu][ubuntu]? I tried Xubuntu 18.10, just to make sure, and the same problems persisted. It was time to walk away from Ubuntu.
 
-In comes [Manjaro][manjaro]. I did not have the time, neither the patience, to set up [Arch Linux][arch], hence my choice. It worked very well for me for quite some time. People at work barely noted the difference. The resident expert warned me against using [Arch Linux][arch] or their descendants. Although the distro is quite stable, the [Arch User Repository (AUR)][aur] is anything but. There are too frequent and overwhelming updates, mostly to fix what they broke on a previous release. There was plenty of wealth within [AUR][aur] and I decided to take the risk. In effect, it was not rare for me to start a system update and realize that there were dozens (if not hundreds) of new packages. After a while, it became rather inconvenient.
+In comes [Manjaro][manjaro]. I did not have the time, neither the patience, to set up [Arch Linux][arch], hence my choice. It worked very well for me for quite some time. People at work barely noted the difference. The resident expert warned me against using [Arch Linux][arch] or their descendants. <a id="aur"></a>Although the distro is quite stable, the [Arch User Repository (AUR)][aur] is anything but. There are too frequent and overwhelming updates, mostly to fix what they broke on a previous release. There was plenty of wealth within [AUR][aur] and I decided to take the risk. In effect, it was not rare for me to start a system update and realize that there were dozens (if not hundreds) of new packages. After a while, it became rather inconvenient.
 
 The next several weeks were exhausting. Using [DistroWatch][distrowatch] as my guide, I tried [MX Linux][mx], [Linux Mint][mint], [AlmaLinux OS][alma] ([if it's good for CERN and Fermilab, then it must be good for me][cern]), and so many others, all of them with their pros and cons, and all of them with some little unique annoyance that would irritate me.
 
@@ -117,7 +117,7 @@ I've been following [Jorge Castro](https://www.youtube.com/@JorgeCastro) for a w
 
 <mark>Attention: it's not a full blown distro. You don't get to install it. Instead, you install a standard atomic desktop and then rebase it to your creation.</mark>
 
-Meanwhile, I've found [Bluefin-DX](https://projectbluefin.io/). It's custom tailored for application development, coming pre-configured with Visual Studio Code for devcontainers, virtualization tools, development and administration tools, a Jurassic theme that would make my granddaughter happy, and so many other goodies. Beyond flatpak, it also comes with [Homebrew][brew] which, despite a few glitches, works very well.
+Meanwhile, I've found [Bluefin-DX][bluefin]. It's custom tailored for application development, coming pre-configured with Visual Studio Code for devcontainers, virtualization tools, development and administration tools, a Jurassic theme that would make my granddaughter happy, and so many other goodies. Beyond flatpak, it also comes with [Homebrew][brew] which, despite a few glitches, works very well.
 
 ## 18 December 2024
 
@@ -127,7 +127,7 @@ Once my need for Windows goes away, I might erase it all and proceed to Silverbl
 
 ## 4 March 2025
 
-All is going well, but suddenly there's a new Fedora update and my laptop stops hibernating. The main difference is that I was running kernel version 6.12.13-200.fc41.x86_64, which was upgraded to 6.12.15-200.fc41.x86_64. Was there an issue with the upgrade? Did I do anything wrong? Because I have different kernel versions, I kept using the former until a new one becomes available.
+All is going well, but suddenly there's a new Fedora update and my laptop stops <a id="hibernate"></a>hibernating. The main difference is that I was running kernel version 6.12.13-200.fc41.x86_64, which was upgraded to 6.12.15-200.fc41.x86_64. Was there an issue with the upgrade? Did I do anything wrong? Because I have different kernel versions, I kept using the former until a new one becomes available.
 
 And that was 6.13.5-200.fc41.x86_64… and the laptop refuses to hibernate.
 
@@ -174,19 +174,43 @@ Fortunately for me, Dropbox ran flawlessly with Hyprland. Same with MATE. Proble
 
 For my professional and volunteer work, I use Zoom with different accounts. Switching between them on Hyprland was making it crash. A solution I found was to replace GNOME with KDE Plasma. Dropbox and Zoom are running perfectly, as well as some of the other critical tools and applications I need. I do miss the Hyprland navigation, but I can switch to it any time without issues.
 
-### Weird screenshot
+## 8 May 2025
 
-Did you find anything unusual about the picture on the top of this page? On the top left quadrant we see [fastfetch][fastfetch] reporting Arch Linux, but on the bottom right it shows [Kubuntu][kubuntu]. How's that possible? Let me assure you: for this screenshot, I did not remote into another computer; it was all local.
+There is a catchphrase accompanying many Arch Linux users: "I use Arch, by the way." One reason behind it is that installing Arch is no easy task.`ArchInstall` does make it easier, but you still require a lot of knowledge before you can succeed at it. Those of us who were able to break the barrier can claim, "I use Arch, by the way." For the same reason, there is somewhat of a dislike or rejection from those who didn't.
 
-The trick is that, as I had mentioned so many times, I'm a bad user. I don't want to overload my computer with tools I use sporadically, such as Ruby and Jekyll for maintaining this blog. It would add unwanted burden to the frequent upgrades. To solve this, I'm using [Distrobox][dbox]. I created an Ubuntu container and loaded it with the necessary tools. Any system upgrades won't affect the container, and I can upgrade the container whenever needed without affecting the computer as a whole.
+But I digress. I'm not going to justify either side. I'll just say that, for my personal and professional needs, I want a <a id="solid"></a>solid and lean distribution that does what it does very well, and Arch Linux is what got me closer to my needs.
 
-Indeed, I'm happy to report that my computers are working exactly the way I want them.
+Until last week.
+
+### No login screen after update
+
+It's extremely easy to break a linux system beyond repair. One way is to run `sudo rm -fR /` on a console; this command deletes **all** files on the computer. Another way is to do other things you shouldn't be doing for not knowing what you're up to. There's yet another way, which is to use a distro whose maintainers lack the necessary discipline to ensure their changes don't break anything. That's exactly what I feared when I mentioned [way up there](#aur "AUR can be unstable") about AUR being unstable.
+
+Before venturing into anything new, I first experiment it on my old laptop. Once I can make it work, I do it on the main one. Some time last week I wanted to get a file from the old one and, curiously enough, after turning it on and entering the encryption passphrase, all I got was a blank screen with a flashing cursor. Did I neglect to finish an installation? Did I do something to break it? I don't remember. But that's okay. I'll get the file somehow.
+
+Fast forward a few days, I updated the software on the laptop and restarted it. To my disappointment, but not necessarily a surprise, I got the very same result. This tells me a recent update did break something.
+
+On average, Arch Linux users dedicate their time to debug these problems and help solve them, but not me. I don't have time for it. I need [a solid distribution](#solid "Solid and lean, in this order")!
+
+### I'm done with distro hopping!
+
+What distro gave me the most relief and satisfaction while using it long term? [Fedora Silverblue][fedora], here I come! It doesn't support dual boot, which is a bummer, but there are plenty of ways to run Windows applications on Linux. Worst case scenario, I can spin up a virtual machine and install Windows on it. Layering applications on Silverblue adds plenty of overhead, but fortunately [Bluefin-DX][bluefin] comes with plenty of batteries included that spare me the pain.
+
+Guess who came knocking on my door: the [ghost from the past](#past "ghost from the past")! Fedora 42 comes with GNOME 48.0, which is incompatible with Dropbox. Whatever problems I had with Arch and GNOME are repeating themselves with Fedora, so I'm applying the same solution: switch to KDE Plasma. Fortunately (again), [Aurora DX][aurora] is equivalent to [Bluefin-DX][bluefin], but using KDE Plasma instead.
+
+What about [hibernation](#hibernate "hibernation")? It works to perfection when secure boot is turned off. Security is also a very important factor for me, but I'm trading it off in the interim. My encrypted filesystem will do.
+
+What about my desktop? Oh, well… Backing it up, installing the new OS, and restoring it to operational mode takes a lot of effort. Until it breaks, I'll continue using it.
+
+Indeed, I'm happy to report that my laptop working exactly the way I want it. My desktop will follow soon.r
 
 [alma]: https://almalinux.org/
 [arch]: https://archlinux.org/
 [arco]: https://arcolinux.com/
 [aur]: https://aur.archlinux.org/
+[aurora]: https://docs.getaurora.dev/dx/aurora-dx-intro/
 [auto]: https://github.com/nwg-piotr/autotiling
+[bluefin]: https://projectbluefin.io/
 [brew]: https://brew.sh/
 [brodie]: https://www.youtube.com/channel/UCld68syR8Wi-GY_n4CaoJGA
 [centos]: https://www.servethehome.com/ibm-red-hat-puts-rhel-source-behind-paywall/
@@ -230,3 +254,4 @@ Indeed, I'm happy to report that my computers are working exactly the way I want
 1. 2025-02-20: Cosmetic details.
 1. 2025-03-04: Fedora is no longer hibernating.
 1. 2025-04-23: Arch (by the way).
+1. 2025-05-08: Aurora DX.
