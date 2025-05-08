@@ -202,7 +202,7 @@ What about [hibernation](#hibernate "hibernation")? It works to perfection when 
 
 What about my desktop? Oh, well… Backing it up, installing the new OS, and restoring it to operational mode takes a lot of effort. Until it breaks, I'll continue using it.
 
-Indeed, I'm happy to report that my laptop working exactly the way I want it. My desktop will follow soon.r
+Indeed, I'm happy to report that my laptop working exactly the way I want it. My desktop will follow soon.
 
 [alma]: https://almalinux.org/
 [arch]: https://archlinux.org/
