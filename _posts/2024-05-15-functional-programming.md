@@ -3,7 +3,7 @@ layout: post
 title:  "Functional programming in Python"
 categories: technology programming functional-programming python
 date: 2024-05-15
-last_modified_at: 2025-10-13
+last_modified_at: 2025-10-14
 excerpt_separator: <!--more-->
 ---
 [![python](/assets/images/python.jpeg)](/functional-programming/)
@@ -50,7 +50,7 @@ FP (for short) is one example of declarative programming. These are a few princi
   - An expression is called *referentially transparent* if it can be replaced with its corresponding value (and vice-versa) without changing the program's behavior. This requires that the expression be pure: its value must be the same for the same inputs and its evaluation must have no side effects.
     - An expression that is not referentially transparent is called *referentially opaque*.[^2]
 
-[^2]: Source: [Wikipedia: Referential transparency](https://en.wikipedia.org/wiki/Referential_transparency
+[^2]: Source: [Wikipedia: Referential transparency](https://en.wikipedia.org/wiki/Referential_transparency)
 
 Note: for reference, this is the Python version I'm using:
 
@@ -88,7 +88,7 @@ There are two side effects (`result` and `i`), both of which are mutable, and th
 factorial1(1558)
 ```
 
-    293 μs ± 4.42 μs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
+    423 μs ± 100 μs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
 
 
 Notes:
@@ -109,7 +109,7 @@ def factorial2(n: int) -> int:
 factorial2(1558)
 ```
 
-    559 μs ± 152 μs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
+    476 μs ± 77.8 μs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
 
 
 It's more than 25% slower.
@@ -127,7 +127,7 @@ factorial3 = lambda n: 1 if n < 2 else n * factorial3(n-1)
 factorial3(1558)
 ```
 
-    581 μs ± 126 μs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
+    386 μs ± 7.04 μs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
 
 
 It's similar to the previous example, and again much slower than using imperative programming. Also, we're not measuring resource usage here, although it's known that recursion does consume memory.
@@ -153,7 +153,7 @@ Likewise, there are three side effects (`a`, `b`, and `i`), all of which mutable
 fibonacci1(20577)
 ```
 
-    5.61 ms ± 1.16 ms per loop (mean ± std. dev. of 7 runs, 100 loops each)
+    3.49 ms ± 52.6 μs per loop (mean ± std. dev. of 7 runs, 100 loops each)
 
 
 Once again, 20,577 is the largest input I could find that does not break the function.
@@ -173,7 +173,7 @@ It becomes unbearably slow, as can be seen here (I tried a smaller number just t
 fibonacci3(30)
 ```
 
-    119 ms ± 17.4 ms per loop (mean ± std. dev. of 7 runs, 10 loops each)
+    72.7 ms ± 892 μs per loop (mean ± std. dev. of 7 runs, 10 loops each)
 
 
 For the sake of comparison, here's the timing when using the purely imperative approach.
@@ -184,7 +184,7 @@ For the sake of comparison, here's the timing when using the purely imperative a
 fibonacci1(30)
 ```
 
-    838 ns ± 167 ns per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
+    771 ns ± 92 ns per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
 
 
 Much faster, indeed.
@@ -220,7 +220,7 @@ How does it perform? It's hard to determine the maximum amount at which it break
 fibonacci4(1000)
 ```
 
-    69 ns ± 13.3 ns per loop (mean ± std. dev. of 7 runs, 10,000,000 loops each)
+    40.3 ns ± 0.611 ns per loop (mean ± std. dev. of 7 runs, 10,000,000 loops each)
 
 
 For the sake of comparison, once again I present you the timing when using the purely imperative approach.
@@ -231,7 +231,7 @@ For the sake of comparison, once again I present you the timing when using the p
 fibonacci1(1000)
 ```
 
-    55.1 μs ± 12.1 μs per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
+    36.3 μs ± 3.28 μs per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
 
 
 The numbers speak for themselves: the dynamic programming example runs in a fraction of the time used by other paradigms. This is because, most of the time, the function is just returning the value that had been previously calculated.
@@ -273,7 +273,7 @@ def fibonacci2a(n : int) -> int:
 fibonacci2a(1000)
 ```
 
-    49.7 ns ± 8.42 ns per loop (mean ± std. dev. of 7 runs, 10,000,000 loops each)
+    40.5 ns ± 5.81 ns per loop (mean ± std. dev. of 7 runs, 10,000,000 loops each)
 
 
 Another possibility is to use `functools.cache`. The difference is that `cache` doesn't enforce a limit whilst `lru_cache` does.
@@ -293,7 +293,7 @@ def fibonacci2b(n : int) -> int:
 fibonacci2b(1000)
 ```
 
-    44 ns ± 4.69 ns per loop (mean ± std. dev. of 7 runs, 10,000,000 loops each)
+    37.3 ns ± 0.677 ns per loop (mean ± std. dev. of 7 runs, 10,000,000 loops each)
 
 
 The other difference is that `cache` could be faster than `lru_cache` because, among other reasons, it doesn't manage limits. Care must be taken, though, because resource consumption could increase significantly over time <mark>and it would be very hard to pinpoint the root cause</mark>.
@@ -304,7 +304,11 @@ By the way, did you notice that the examples using `cache` and `lru_cache` ran f
 
 <mark>This section is purely information, as Python (at least as of the time of this writing) doesn't support tail recursion optimization.</mark>
 
-Tail recursion is defined as a recursive function in which the recursive call is the last statement that is executed by the function. So basically nothing is left to execute after the recursion call.[^4] Let's revisit the definition of `factorial2`:
+Tail recursion is defined as a recursive function in which the recursive call is the last statement that is executed by the function. So basically nothing is left to execute after the recursion call.[^4]
+
+[^4]: Source: [GeeksforGeeks: What is Tail Recursion](https://www.geeksforgeeks.org/dsa/tail-recursion/)
+
+Let's revisit the definition of `factorial2`:
 
 ```python
 def factorial2(n: int) -> int:
@@ -332,7 +336,7 @@ We can be sure the recursive call is the very last statement because there's not
 factorial4(1558)
 ```
 
-    649 μs ± 149 μs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
+    481 μs ± 15.2 μs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
 
 
 No improvement over `factorial2` or `factorial3`, but then (again) Python does not currently support tail recursion optimization. If you were to try this on a different language, e.g. Ocaml or Elixir, you'd see a radical difference.
@@ -365,7 +369,7 @@ def fibonacci2c(n: int) -> int:
 fibonacci2c(30)
 ```
 
-    2.12 μs ± 567 ns per loop (mean ± std. dev. of 7 runs, 100,000 loops each)
+    1.57 μs ± 9 ns per loop (mean ± std. dev. of 7 runs, 1,000,000 loops each)
 
 
 
@@ -374,12 +378,10 @@ fibonacci2c(30)
 fibonacci2c(1000)
 ```
 
-    116 μs ± 1.43 μs per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
+    115 μs ± 761 ns per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
 
 
 It's faster than the non-tail recursive function, not due to tail recursion optimization (non-existent in Python nowadays), but because it's avoiding duplicate calls (for `n-1` and `n-2`).
-
-[^4]: Source: [GeeksforGeeks: What is Tail Recursion](https://www.geeksforgeeks.org/dsa/tail-recursion/)
 
 ## Functional programming is not perfect
 
@@ -638,10 +640,6 @@ There are, nonetheless, multiparadigm programming languages. You'll have the opt
 4. 2025-03-18: Correcting my own mistakes.
 5. 2025-04-28: Spell check.
 6. 2025-10-13: Tail recursion.
+7. 2025-10-14: Minor cleanup.
 
 ---
-
-
-```python
-
-```
