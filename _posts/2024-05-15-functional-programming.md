@@ -3,7 +3,7 @@ layout: post
 title:  "Functional programming in Python"
 categories: technology programming functional-programming python
 date: 2024-05-15
-last_modified_at: 2025-04-28
+last_modified_at: 2025-10-13
 excerpt_separator: <!--more-->
 ---
 [![python](/assets/images/python.jpeg)](/functional-programming/)
@@ -63,7 +63,7 @@ sys.version
 
 
 
-    '3.13.3 (main, Apr  9 2025, 07:44:25) [GCC 14.2.1 20250207]'
+    '3.13.7 (main, Aug 15 2025, 12:34:02) [GCC 15.2.1 20250813]'
 
 
 
@@ -88,7 +88,7 @@ There are two side effects (`result` and `i`), both of which are mutable, and th
 factorial1(1558)
 ```
 
-    281 μs ± 514 ns per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
+    293 μs ± 4.42 μs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
 
 
 Notes:
@@ -109,7 +109,7 @@ def factorial2(n: int) -> int:
 factorial2(1558)
 ```
 
-    375 μs ± 772 ns per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
+    559 μs ± 152 μs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
 
 
 It's more than 25% slower.
@@ -127,7 +127,7 @@ factorial3 = lambda n: 1 if n < 2 else n * factorial3(n-1)
 factorial3(1558)
 ```
 
-    375 μs ± 873 ns per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
+    581 μs ± 126 μs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
 
 
 It's similar to the previous example, and again much slower than using imperative programming. Also, we're not measuring resource usage here, although it's known that recursion does consume memory.
@@ -153,7 +153,7 @@ Likewise, there are three side effects (`a`, `b`, and `i`), all of which mutable
 fibonacci1(20577)
 ```
 
-    3.38 ms ± 10 μs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+    5.61 ms ± 1.16 ms per loop (mean ± std. dev. of 7 runs, 100 loops each)
 
 
 Once again, 20,577 is the largest input I could find that does not break the function.
@@ -173,7 +173,7 @@ It becomes unbearably slow, as can be seen here (I tried a smaller number just t
 fibonacci3(30)
 ```
 
-    64.9 ms ± 147 μs per loop (mean ± std. dev. of 7 runs, 10 loops each)
+    119 ms ± 17.4 ms per loop (mean ± std. dev. of 7 runs, 10 loops each)
 
 
 For the sake of comparison, here's the timing when using the purely imperative approach.
@@ -184,7 +184,7 @@ For the sake of comparison, here's the timing when using the purely imperative a
 fibonacci1(30)
 ```
 
-    584 ns ± 38.8 ns per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
+    838 ns ± 167 ns per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
 
 
 Much faster, indeed.
@@ -220,7 +220,7 @@ How does it perform? It's hard to determine the maximum amount at which it break
 fibonacci4(1000)
 ```
 
-    37.5 ns ± 0.0837 ns per loop (mean ± std. dev. of 7 runs, 10,000,000 loops each)
+    69 ns ± 13.3 ns per loop (mean ± std. dev. of 7 runs, 10,000,000 loops each)
 
 
 For the sake of comparison, once again I present you the timing when using the purely imperative approach.
@@ -231,7 +231,7 @@ For the sake of comparison, once again I present you the timing when using the p
 fibonacci1(1000)
 ```
 
-    31.5 μs ± 422 ns per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
+    55.1 μs ± 12.1 μs per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
 
 
 The numbers speak for themselves: the dynamic programming example runs in a fraction of the time used by other paradigms. This is because, most of the time, the function is just returning the value that had been previously calculated.
@@ -273,7 +273,7 @@ def fibonacci2a(n : int) -> int:
 fibonacci2a(1000)
 ```
 
-    34.6 ns ± 0.0506 ns per loop (mean ± std. dev. of 7 runs, 10,000,000 loops each)
+    49.7 ns ± 8.42 ns per loop (mean ± std. dev. of 7 runs, 10,000,000 loops each)
 
 
 Another possibility is to use `functools.cache`. The difference is that `cache` doesn't enforce a limit whilst `lru_cache` does.
@@ -293,12 +293,93 @@ def fibonacci2b(n : int) -> int:
 fibonacci2b(1000)
 ```
 
-    35 ns ± 0.0798 ns per loop (mean ± std. dev. of 7 runs, 10,000,000 loops each)
+    44 ns ± 4.69 ns per loop (mean ± std. dev. of 7 runs, 10,000,000 loops each)
 
 
 The other difference is that `cache` could be faster than `lru_cache` because, among other reasons, it doesn't manage limits. Care must be taken, though, because resource consumption could increase significantly over time <mark>and it would be very hard to pinpoint the root cause</mark>.
 
 By the way, did you notice that the examples using `cache` and `lru_cache` ran faster than my previous code caching intermediate results internally (fibonacci4)?
+
+## Tail recursion
+
+<mark>This section is purely information, as Python (at least as of the time of this writing) doesn't support tail recursion optimization.</mark>
+
+Tail recursion is defined as a recursive function in which the recursive call is the last statement that is executed by the function. So basically nothing is left to execute after the recursion call.[^4] Let's revisit the definition of `factorial2`:
+
+```python
+def factorial2(n: int) -> int:
+    return 1 if n < 2 else n * factorial2(n-1)
+```
+
+The early impression is that the call to `factorial2(n-1)` is the last statement, so in principle we're good, but if we look at it in detail, we realize that the result of the call must be multiplied by `n`, therefore this is not tail recursion. The program must save the current context to its stack before calling itself, which results in extra resource utilization. One way of enforcing tail recursion is by creating an additional variable to serve as an accumulator and pass it to an internal function. This allows us to change the implementation **without** changing the function signature, thus preserving the rest of the program.
+
+
+```python
+def factorial4(n: int) -> int:
+    def f4tr(n: int, acc: int) -> int:
+        if n == 0:
+            return acc
+        else:
+            return f4tr(n-1, n*acc)
+    return f4tr(n, 1)
+```
+
+We can be sure the recursive call is the very last statement because there's nothing hanging on it. How does it perform?
+
+
+```python
+%%timeit
+factorial4(1558)
+```
+
+    649 μs ± 149 μs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
+
+
+No improvement over `factorial2` or `factorial3`, but then (again) Python does not currently support tail recursion optimization. If you were to try this on a different language, e.g. Ocaml or Elixir, you'd see a radical difference.
+
+Just wrapping it up, how could we do it on the Fibonacci sequence?
+
+```python
+def fibonacci2(n : int) -> int:
+    return n if n < 2 else fibonacci2(n-1) + fibonacci2(n-2)
+```
+
+In the case of a factorial, we created an extra variable to serve as the accumulator. For the Fibonacci sequence, we'd create two accumulators: one for `n-1` and one for `n-2`.
+
+
+```python
+def fibonacci2c(n: int) -> int:
+    def f2tr(n: int, a: int, b: int) -> int:
+        if n == 0:
+            return a
+        elif n == 1:
+            return b
+        else:
+            return f2tr(n-1, b, a+b)
+    return f2tr(n, 0, 1)
+```
+
+
+```python
+%%timeit
+fibonacci2c(30)
+```
+
+    2.12 μs ± 567 ns per loop (mean ± std. dev. of 7 runs, 100,000 loops each)
+
+
+
+```python
+%%timeit
+fibonacci2c(1000)
+```
+
+    116 μs ± 1.43 μs per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
+
+
+It's faster than the non-tail recursive function, not due to tail recursion optimization (non-existent in Python nowadays), but because it's avoiding duplicate calls (for `n-1` and `n-2`).
+
+[^4]: Source: [GeeksforGeeks: What is Tail Recursion](https://www.geeksforgeeks.org/dsa/tail-recursion/)
 
 ## Functional programming is not perfect
 
@@ -535,7 +616,7 @@ In many programming languages, no code outside of an enclosing class has any vis
 
 ## The Golden Hammer antipattern
 
-The Golden Hammer antipattern permeates from a development team's overreliance on a single tool set, pattern, platform, or other component of the development workflow. It is a classic pitfall that any team faces when they have gained some level of expertise in a particular solution or methodology. This antipattern is appropriately summarized using the following adage: "When all you have is a hammer, everything looks like a nail."[^4]
+The Golden Hammer antipattern permeates from a development team's overreliance on a single tool set, pattern, platform, or other component of the development workflow. It is a classic pitfall that any team faces when they have gained some level of expertise in a particular solution or methodology. This antipattern is appropriately summarized using the following adage: "When all you have is a hammer, everything looks like a nail."[^5]
 
 One of the main advantages of functional programming is its simplicity. Given the same results for the same inputs, and given there are no side effects, it's easy to debug. Resource consumption and execution time may be issues and must be taken into account. In my past experience as a software engineer, however, I should say that only in rare occasions I dealt with deep recursion levels. The most notable case was so many years ago, when I had to look up data in a hierarchical data structure. Resources were at a premium and my program was crashing at random intervals. My very talented data architect came to the rescue, creating a new database view for me, and my problems went away.
 
@@ -545,7 +626,7 @@ There are purely declarative programming languages. Likewise, there are purely i
 
 There are, nonetheless, multiparadigm programming languages. You'll have the option to choose how to write your code. Against the Golden Hammer antipattern, remember that you have multiple tools and techniques at your disposal, so do yourself a favor and choose the best one for solving the problem at hand.
 
-[^4]: Source: [TechTarget: Signs of a Golden Hammer antipattern, and 5 ways to avoid it](https://www.techtarget.com/searchapparchitecture/tip/Signs-of-a-Golden-Hammer-antipattern-and-ways-to-avoid-it)
+[^5]: Source: [TechTarget: Signs of a Golden Hammer antipattern, and 5 ways to avoid it](https://www.techtarget.com/searchapparchitecture/tip/Signs-of-a-Golden-Hammer-antipattern-and-ways-to-avoid-it)
 
 ---
 
@@ -556,5 +637,11 @@ There are, nonetheless, multiparadigm programming languages. You'll have the opt
 3. 2025-03-17: Problems with functional programming.
 4. 2025-03-18: Correcting my own mistakes.
 5. 2025-04-28: Spell check.
+6. 2025-10-13: Tail recursion.
 
 ---
+
+
+```python
+
+```
