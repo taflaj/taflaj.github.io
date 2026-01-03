@@ -3,12 +3,12 @@ layout: post
 title:  "The quest for the perfect desktop"
 categories: technology linux
 date: 2024-05-10
-last_modified_at: 2025-05-08
+last_modified_at: 2026-01-03
 excerpt_separator: <!--more-->
 ---
 [![My Perfect Desktop](/assets/images/desktop.jpg)](/perfect-desktop/)
 
-On my desktop PC I'm currently running Arch Linux with [MATE Desktop][mate]. On my laptop I have [Fedora Silverblue][fedora] rebased to [Aurora DX][aurora]. It took me significant time and effort to come here, though.
+On my desktop PC I'm currently running [Arch Linux][arch] with [GNOME](https://www.gnome.org/). On my laptop I have [Arch Linux][arch] with [niri][niri]. It took me significant time and effort to come here, though.
 <!--more-->
 
 ## A very long history in the making
@@ -176,7 +176,7 @@ For my professional and volunteer work, I use Zoom with different accounts. Swit
 
 ## 8 May 2025
 
-There is a catchphrase accompanying many Arch Linux users: "I use Arch, by the way." One reason behind it is that installing Arch is no easy task.`ArchInstall` does make it easier, but you still require a lot of knowledge before you can succeed at it. Those of us who were able to break the barrier can claim, "I use Arch, by the way." For the same reason, there is somewhat of a dislike or rejection from those who didn't.
+There is a catchphrase accompanying many Arch Linux users: "I use Arch, by the way." One reason behind it is that installing Arch is no easy task. `ArchInstall` does make it easier, but you still require a lot of knowledge before you can succeed at it. Those of us who were able to break the barrier can claim, "I use Arch, by the way." For the same reason, there is somewhat of a dislike or rejection from those who didn't.
 
 But I digress. I'm not going to justify either side. I'll just say that, for my personal and professional needs, I want a <a id="solid"></a>solid and lean distribution that does what it does very well, and Arch Linux is what got me closer to my needs.
 
@@ -202,7 +202,33 @@ What about [hibernation](#hibernate "hibernation")? It works to perfection when 
 
 What about my desktop? Oh, well… Backing it up, installing the new OS, and restoring it to operational mode takes a lot of effort. Until it breaks, I'll continue using it.
 
-Indeed, I'm happy to report that my laptop working exactly the way I want it. My desktop will follow soon.
+## 3 January 2026
+
+Happy New Year! May 2026 bring all sorts of happiness and success to you and all your loved ones.
+
+Let's go back to Friday 13 this past June. My 12 year old Dell Optiplex 9020 gave its last breath. RIP old buddy for your support. We've been through so many adventures, haven't we?
+
+The king is dead? Long live the king! I need a new home server.
+
+A few weeks ago I bought my wife an MSI Modern 15 (13th Gen Intel Core i9 with 32MB RAM), which she loved, except for one detail: no touch screen. I don't mind not touching the screen, but for her it's a big deal, so I gave her another machine and kept the MSI myself to serve as my new workstation. As for the old Dell Inspiron 15, which was serving as my lab, it became my new home server.
+
+At that time I was tinkering with [NixOS][nixos] *again*, and again I was impressed by how solid it is. You set the master configuration to your liking, reboot the computer, and *voilà* there's a fresh installation ready for you. All updates take place in the background and, once you're ready, you reboot the computer, and an updated installation is at your disposal. Didn't like it? No problem: reboot it and select a previous version at boot time. Indeed, I liked it… but I didn't love it. I had problems with Dropbox in the past, but with the [Maestral](https://maestral.app/) client, those problems went away. [Insync](https://www.insynchq.com/), however, wasn't working well; NixOS is not a supported platform, so it's **my** problem.
+
+[Fedora Silverblue][fedora] and the other atomic distributions have some of the same characteristics of NixOS, but with a particular advantage for me: **everything works**. All tools and applications I need on a daily basis work to perfection. With the latest upgrade, in came two minor inconveniences. One had to do with the file manager, which was not displaying thumbnails for image files at all; I could live with it. The other was with [PaperWM](https://extensions.gnome.org/extension/6099/paperwm/), a [GNOME][gnome] extension that implements scrollable desktops (more on this on a separate article), where the touchpad wasn't as functional anymore; I could also live with it.
+
+But I didn't want to. I don't want to compromise. It's my computer and I want it **perfect**. If we're talking scrollable desktops, then some awesome alternatives include [niri][niri] and [scroll](https://github.com/dawsers/scroll), which worked well… to an extent. Although Silverblue allows me to not be disciplined, I'd rather be disciplined with a perfect computer than use an okay machine.
+
+[Debian][debian] presented an interesting challenge. Installation was flawless, as usual, but upon the initial boot, it didn't recognize my Wi-Fi adapter, even though it was already using it. In effect, no web browsers complained about connectivity, neither my other networking tools, but I just couldn't configure the adapter, which meant, among other things, I wouldn't be able to switch networks.
+
+Who's left?
+
+### Arch Linux again
+
+There's a select *club* of Arch Linux users who installed it from scratch. I belong to that club. I have the scars and the proverbial T-shirt. It's a long and tedious process. Nowadays, I lack the patience.
+
+There's [archinstall](https://wiki.archlinux.org/title/Archinstall), the automated installer, but it's not be used by club members. I don't care. It's reasonably fast, which is what matters to me. On my old laptop, which was converted to a desktop, the installer worked to perfection. On my new laptop, not so much: I need to have sufficient swap space for hibernation, but the installer doesn't support it. That's okay. It's open source, isn't it? I found out how it works, changed the configuration, ran the installer, and here I am.
+
+Indeed, I'm happy to report that my computers are working exactly the way I want them.
 
 [alma]: https://almalinux.org/
 [arch]: https://archlinux.org/
@@ -222,6 +248,7 @@ Indeed, I'm happy to report that my laptop working exactly the way I want it. My
 [fastfetch]: https://github.com/fastfetch-cli/fastfetch
 [fedora]: https://fedoraproject.org/
 [garuda]: https://garudalinux.org/
+[gnome]: https://www.gnome.org/
 [guide]: https://www.youtube.com/watch?v=zQQN3Pj4K0Y
 [hypr]: https://hyprland.org/
 [i3wm]: https://i3wm.org/
@@ -234,6 +261,7 @@ Indeed, I'm happy to report that my laptop working exactly the way I want it. My
 [mint]: https://www.linuxmint.com/
 [mx]: https://mxlinux.org/
 [neon]: https://neon.kde.org/
+[niri]: https://github.com/YaLTeR/niri
 [nixos]: https://nixos.org/
 [recommend]: https://www.youtube.com/watch?v=xCqPgQ-Vh3E
 [snapper]: https://github.com/openSUSE/snapper
@@ -255,3 +283,4 @@ Indeed, I'm happy to report that my laptop working exactly the way I want it. My
 1. 2025-03-04: Fedora is no longer hibernating.
 1. 2025-04-23: Arch (by the way).
 1. 2025-05-08: Aurora DX.
+1. 2026-01-03: RIP old buddy.
