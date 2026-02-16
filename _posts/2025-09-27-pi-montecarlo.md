@@ -4,7 +4,7 @@ title:  "Monte Carlo experiments and the value of π"
 categories: technology programming montecarlo statistics math
 excerpt_separator: <!--more-->
 date: 2025-09-27
-last_modified_at: 2025-10-08
+last_modified_at: 2026-02-16
 ---
 [![pi-montecarlo](/assets/images/pi-montecarlo.jpeg)](/pi-montecarlo/)
 <div style="font-size: 0.8em; text-align: right">Image source: ChatGPT</div>
@@ -35,20 +35,27 @@ Let's create a computer program for this simulation. To make matters easier, let
 Here's the Python program:
 
 ``` python
-import secrets, sys
+import secrets
+import sys
 
-get_random = lambda: secrets.randbelow(1000) / 1000
-is_inside = lambda x, y: x*x + y*y <= 1
+
+def get_random() -> float:
+    return secrets.randbelow(1000) / 1000
+
+
+def is_inside(x: float, y: float) -> bool:
+    return x * x + y * y <= 1
+
 
 n = 100_000_000 if len(sys.argv) == 1 else int(sys.argv[1])
 inside = 0
-for i in range(n):
-    if (is_inside(get_random(), get_random())):
+for _ in range(n):
+    if is_inside(get_random(), get_random()):
         inside += 1
 print(inside * 4 / n)
 ```
 
-We're using `secrets` because it uses the computer random number generator, and we accept a command line argument with the number of points to use (default: 100 million). Because we're using a quarter of a circle, we need to multiply the result by 4. A sample run on my computer gave me 3.14564084 but it took longer than a minute and a half; I can't wait that long! For the record, it's a 13th generation Intel i9 with 20 cores at 5.4GHz; it's a very powerful machine, but certainly not enough for this exercise.
+We're using `secrets` because it uses the computer random number generator, and we accept a command line argument with the number of points to use (default: 100 million). Because we're using a quarter of a circle, we need to multiply the result by 4. A sample run on my computer gave me 3.14564084 but it took longer than a minute; I can't wait that long! For the record, it's a 13th generation Intel i9 with 20 cores at 5.4GHz; it's a very powerful machine, but certainly not enough for this exercise.
 
 Or is Python the problem? Python is incredibly powerful and easy to use, but for heavy calculations, it's not necessarily the best choice. Let's rewrite the program in Go:
 
@@ -64,7 +71,7 @@ import (
 
 func main() {
 	inside := 0
-	n := 100000000
+	n := 100_000_000
 	if len(os.Args) > 1 {
 		n, _ = strconv.Atoi(os.Args[1])
 	}
@@ -79,7 +86,7 @@ func main() {
 }
 ```
 
-How does it perform? On the same computer, it gave me 3.1415122 in less than a second and a half, and 3.1416738 on the second run. Depending on the version of Go you have, you could replace `math/rand` with `math/rand/v2`, which will cut your execution time even further; for example, it gave me 3.1416448 in a little over 1 second. If I wanted to use more points, therefore increasing the precision, I could use 1 billion points for example; one result was 3.141558076 and it took almost 11 seconds.
+How does it perform? On the same computer, it gave me 3.1415122 in less than a second and a half, and 3.1416738 on the second run. Depending on the version of Go you have, you could replace `math/rand` with `math/rand/v2`, which will cut your execution time even further; for example, it gave me 3.1416448 in a little over 1 second. If I wanted to use more points, therefore increasing the precision, I could use 1 billion points for example; one result was 3.141558076 and it took less than 11 seconds.
 
 #### I don't love this outcome…!
 
@@ -98,64 +105,75 @@ Spoiler alert: the table at the end of this article shows how each alternative p
 Random number generation is a complicated matter. It involves a series of calculations based on an initial value, usually referred to as "seed." Because random numbers can be used in cryptography, if one could replicate the seed than all cryptography is dismantled. In my initial program I was using `secrets` because it relies on the operating system itself, which makes it more secure. The tradeoff is that `secrets` uses `/dev/random`, which is a special file, and reading from files incurs delays. Let's rewrite the program to use `random` instead.
 
 ```python
-import random, sys
+import sys
+from random import random
+
 
 def calculate(n: int) -> float:
     inside = 0
-    for i in range(n):
-        x = random.random()
-        y = random.random()
-        if x*x + y*y <= 1.0:
+    for _ in range(n):
+        x = random()
+        y = random()
+        if x * x + y * y <= 1.0:
             inside += 1
     return inside * 4 / n
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     n = 100_000_000 if len(sys.argv) == 1 else int(sys.argv[1])
     print(calculate(n))
 ```
 
-I also made the calculation into a function. The reason will become clear soon. Meanwhile, it must be noted that, instead of a minute and a half, it took slightly over 9 seconds.
+It must be noted that, instead of a minute and a half, it took slightly over 10 seconds.
 
 One characteristic of Python is that each program runs on a single CPU core. No matter how many cores you have, the program will only use one. For enterprise applications, this makes it beneficial because it's easy to scale, but for calculation-intensive applications you're not leveraging the full power of your computer. There are tools and mechanisms to spread your program execution across multiple cores, but it usually involves a major rewrite of your program.
 
-Another characteristic of Python is that the program is compiled at runtime. Depending on the case, this incurs slower execution time and increased resource usage. Specifically for numeric calculations, [Numba](https://numba.pydata.org/) could be your friend. Its first trick is to pre-compile the code so it doesn't have to be interpreted at runtime. All it takes is a single `@njit` decorator and obviously importing the Numba library.
+Another characteristic of Python is that the program is converted to bytecode and interpreted at runtime. Depending on the case, this incurs slower execution time and increased resource usage. Specifically for numeric calculations, [Numba](https://numba.pydata.org/) could be your friend. Its first trick is to pre-compile the code so it doesn't have to be interpreted at runtime. All it takes is a single `@njit` decorator and obviously importing the Numba library.
 
 ```python
-import random, sys
+import sys
+from random import random
+
 from numba import njit
+
 
 @njit
 def calculate(n: int) -> float:
     inside = 0
-    for i in range(n):
-        x = random.random()
-        y = random.random()
-        if x*x + y*y <= 1.0:
+    for _ in range(n):
+        x = random()
+        y = random()
+        if x * x + y * y <= 1.0:
             inside += 1
     return inside * 4 / n
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     n = 100_000_000 if len(sys.argv) == 1 else int(sys.argv[1])
     print(calculate(n))
 ```
 
-Impressively enough, it ran in less than 2 seconds (almost 5 times faster).
+Impressively enough, it ran in less than 3 seconds (considerably faster).
 
 Another benefit is that Numba can spread NumPy array expressions across multiple CPU cores, which could speed it up. It's all a matter of adding `@njit(parallel=True)`.
 
+#### Python 3.14
+
+When I wrote the original article, I was using Python 3.13, but now I've upgraded to 3.14 and updated all timings. I also added rows to the table down below to differentiate between versions. You'll notice that Python 3.14 with the `secrets` library ran considerably faster, while using `random` and `numba` performed a tad slower.
+
 ### Mojo
 
-[Mojo](https://www.modular.com/mojo) is a relatively new language. For example, I'm currently using version 0.25.6.0, which is the latest on Arch Linux. The standard library is open source, but the compiler not yet. Its syntax is similar to Python and programs can be compiled to run on any hardware, including GPUs. The program, as expected, is rather straightforward:
+[Mojo](https://www.modular.com/mojo) is a relatively new language. For example, I'm currently using version 0.26.1.0, which is the latest on Arch Linux. The standard library is open source, but the compiler not yet. Its syntax is similar to Python and programs can be compiled to run on any hardware, including GPUs. As for the program, I could have used the very same source code, but instead I opted for a Mojo optimization:
 
 ```python
 import random
 from sys import argv
 
-def main():
+fn main() raises -> None:
     n = 100_000_000 if len(argv()) == 1 else Int(argv()[1])
     random.seed()
     inside = 0
-    for _i in range(n):
+    for _ in range(n):
         x = random.random_float64()
         y = random.random_float64()
         if x*x + y*y <= 1:
@@ -163,7 +181,100 @@ def main():
     print(inside * 4 / n)
 ```
 
-How did it perform? Not as well: longer than 12 seconds. If I had a GPU I could report better numbers, but I don't have one, ergo I can't. Perhaps you can?
+The optimization is using `fn` instead of `def`, which instructs the compiler to use Mojo mode. The other changes are just to comply with the Mojo syntax.
+
+How did it perform? Much better than pure Python, but Numba is still giving Python an edge. If I had a GPU I could report better numbers, but I don't have one, ergo I can't. Perhaps you can?
+
+### OCaml
+
+Due to professional reasons, I've been studying OCaml recently. In case you've never heard of it, it's geared towards functional programming, but it also allows for imperative programming. I'm using this double nature to measure its performance.
+
+I'm not bothering exploring command line arguments and am hard coding 100 million iterations. The first example follows an imperative approach, which is more palatable for so many programmers.
+
+``` ocaml
+let calculate number =
+  let inside = ref 0 in
+  for _ = 1 to number do
+    let x = Random.float 1.0 in
+    let y = Random.float 1.0 in
+    if x *. x +. y *. y <= 1.0 then
+      incr inside
+  done;
+  (float_of_int !inside /. float_of_int number) *. 4.0
+
+let () =
+  Random.self_init ();
+  let number = 100_000_000 in
+  let pi = calculate number in
+  Printf.printf "%f\n" pi
+```
+
+The next example follows a functional approach to appease the purists and myself.
+
+``` ocaml
+let calculate number =
+  let rec loop i inside =
+  if i >= number then
+    (float_of_int inside /. float_of_int number) *. 4.0
+  else
+    let x = Random.float 1.0 in
+    let y = Random.float 1.0 in
+    let inside =
+      if x *. x +. y *. y <= 1.0 then
+        inside + 1
+      else
+        inside
+    in
+    loop (i + 1) inside
+  in
+  loop 0 0
+
+let () =
+  Random.self_init ();
+  let number = 100_000_000 in
+  let pi = calculate number in
+  Printf.printf "%f\n" pi
+```
+
+This is very subjective (I know), but in my humble opinion, OCaml is very pretty.
+
+Please see the results down below.
+
+### C
+
+Let's have a formal baseline!
+
+``` c
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+static double random_double() {
+    return (double) rand() / (double) RAND_MAX;
+}
+
+static double calculate(long n) {
+    long inside = 0;
+    srand(time(NULL));
+    for (long i = 0; i < n; i++) {
+        double x = random_double();
+        double y = random_double();
+        if (x*x + y*y <= 1.0)
+            inside++;
+    }
+    return (double) inside * 4 / n;
+}
+
+int main(const int argc, const char *argv[]) {
+    long n = 100000000;
+    if (argc > 1)
+        n = atol(argv[1]);
+    printf("%lf\n", calculate(n));
+    return 0;
+}
+```
+
+Before you check the table below, let me spoil the surprise: Go ran faster than C! Less than 10% faster, yet faster nonetheless.
 
 ### Comparison
 
@@ -171,18 +282,30 @@ In alphabetical order, this is how the different languages and tools performed. 
 
 | Name | Iterations | Sample Duration (seconds) |
 | :--- | :---: | ---: |
-| Go | 100M | 1.119 |
-| Mojo | 100M | 12.827 |
-| Python with Numba | 100M | 1.902 |
-| Python with `random` | 100M | 9.265 |
-| Python with `secrets`| 100M | 100.849 |
+| C | 100M | 1.628 |
+| Go with `math/rand` | 100M | 1.479 |
+| Go with `math/rand/v2` | 100M | 1.106 |
+| Mojo | 100M | 3.878 |
+| OCaml functional | 100M | 1.815 |
+| OCaml imperative | 100M | 1.834 |
+| Python 3.13 with Numba | 100M | 1.902 |
+| Python 3.13 with `random` | 100M | 9.265 |
+| Python 3.13 with `secrets`| 100M | 100.849 |
+| Python 3.14 with Numba | 100M | 2.108 |
+| Python 3.14 with `random` | 100M | 10.542 |
+| Python 3.14 with `secrets`| 100M | 77.705 |
+
+Please note: this is not a comprehensive, all inclusive, thorough benchmark. Instead, it's just a use case. An example. Should it influence you when deciding what to use on your next major project? I'll leave it at your discretion. Is it going to influence me? Not at all! There are several factors to be considered when choosing a programming language, where performance and resource consumption should be on the top of the list, with mainstream adoption as a close third. I've left Zig off the list because it's not mature enough, at least for me, but included Mojo because there's a parade of geeks pushing for its adoption and I wanted to see how it compares. I'm not impressed, to be honest. Someone has said that Julia is a strong contender because, just like Python, it allows for thorough modeling but delivering better performance; I'll save it for an upcoming revision.
+
+Meanwhile, my preferences are still (in no particular order) Go, OCaml, and Python.
 
 ---
 
 #### Revision history
 
 1. 2025-09-27: Original posting date.
-1. 2025-10-08: Speeding up Python; Mojo.
+2. 2025-10-08: Speeding up Python; Mojo.
+3. 2026-02-16: Python 3.14; C; OCaml.
 
 ---
 
