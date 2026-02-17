@@ -3,7 +3,7 @@ layout: post
 title:  "Functional programming in Python"
 categories: technology programming functional-programming python
 date: 2024-05-15
-last_modified_at: 2025-10-14
+last_modified_at: 2026-02-17
 excerpt_separator: <!--more-->
 ---
 [![python](/assets/images/python.jpeg)](/functional-programming/)
@@ -63,7 +63,7 @@ sys.version
 
 
 
-    '3.13.7 (main, Aug 15 2025, 12:34:02) [GCC 15.2.1 20250813]'
+    '3.14.2 (main, Jan  2 2026, 14:27:39) [GCC 15.2.1 20251112]'
 
 
 
@@ -88,7 +88,7 @@ There are two side effects (`result` and `i`), both of which are mutable, and th
 factorial1(1558)
 ```
 
-    423 μs ± 100 μs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
+    284 μs ± 1.49 μs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
 
 
 Notes:
@@ -109,7 +109,7 @@ def factorial2(n: int) -> int:
 factorial2(1558)
 ```
 
-    476 μs ± 77.8 μs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
+    376 μs ± 1.96 μs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
 
 
 It's more than 25% slower.
@@ -127,7 +127,7 @@ factorial3 = lambda n: 1 if n < 2 else n * factorial3(n-1)
 factorial3(1558)
 ```
 
-    386 μs ± 7.04 μs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
+    374 μs ± 892 ns per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
 
 
 It's similar to the previous example, and again much slower than using imperative programming. Also, we're not measuring resource usage here, although it's known that recursion does consume memory.
@@ -153,7 +153,7 @@ Likewise, there are three side effects (`a`, `b`, and `i`), all of which mutable
 fibonacci1(20577)
 ```
 
-    3.49 ms ± 52.6 μs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+    3.47 ms ± 2.14 μs per loop (mean ± std. dev. of 7 runs, 100 loops each)
 
 
 Once again, 20,577 is the largest input I could find that does not break the function.
@@ -173,7 +173,7 @@ It becomes unbearably slow, as can be seen here (I tried a smaller number just t
 fibonacci3(30)
 ```
 
-    72.7 ms ± 892 μs per loop (mean ± std. dev. of 7 runs, 10 loops each)
+    64.3 ms ± 77.4 μs per loop (mean ± std. dev. of 7 runs, 10 loops each)
 
 
 For the sake of comparison, here's the timing when using the purely imperative approach.
@@ -184,7 +184,7 @@ For the sake of comparison, here's the timing when using the purely imperative a
 fibonacci1(30)
 ```
 
-    771 ns ± 92 ns per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
+    526 ns ± 5.72 ns per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
 
 
 Much faster, indeed.
@@ -220,7 +220,7 @@ How does it perform? It's hard to determine the maximum amount at which it break
 fibonacci4(1000)
 ```
 
-    40.3 ns ± 0.611 ns per loop (mean ± std. dev. of 7 runs, 10,000,000 loops each)
+    36.4 ns ± 0.105 ns per loop (mean ± std. dev. of 7 runs, 10,000,000 loops each)
 
 
 For the sake of comparison, once again I present you the timing when using the purely imperative approach.
@@ -231,7 +231,7 @@ For the sake of comparison, once again I present you the timing when using the p
 fibonacci1(1000)
 ```
 
-    36.3 μs ± 3.28 μs per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
+    34.2 μs ± 76.1 ns per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
 
 
 The numbers speak for themselves: the dynamic programming example runs in a fraction of the time used by other paradigms. This is because, most of the time, the function is just returning the value that had been previously calculated.
@@ -273,7 +273,7 @@ def fibonacci2a(n : int) -> int:
 fibonacci2a(1000)
 ```
 
-    40.5 ns ± 5.81 ns per loop (mean ± std. dev. of 7 runs, 10,000,000 loops each)
+    36.2 ns ± 0.0824 ns per loop (mean ± std. dev. of 7 runs, 10,000,000 loops each)
 
 
 Another possibility is to use `functools.cache`. The difference is that `cache` doesn't enforce a limit whilst `lru_cache` does.
@@ -293,7 +293,7 @@ def fibonacci2b(n : int) -> int:
 fibonacci2b(1000)
 ```
 
-    37.3 ns ± 0.677 ns per loop (mean ± std. dev. of 7 runs, 10,000,000 loops each)
+    34 ns ± 0.0568 ns per loop (mean ± std. dev. of 7 runs, 10,000,000 loops each)
 
 
 The other difference is that `cache` could be faster than `lru_cache` because, among other reasons, it doesn't manage limits. Care must be taken, though, because resource consumption could increase significantly over time <mark>and it would be very hard to pinpoint the root cause</mark>.
@@ -336,10 +336,10 @@ We can be sure the recursive call is the very last statement because there's not
 factorial4(1558)
 ```
 
-    481 μs ± 15.2 μs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
+    466 μs ± 284 ns per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
 
 
-No improvement over `factorial2` or `factorial3`, but then (again) Python does not currently support tail recursion optimization. If you were to try this on a different language, e.g. Ocaml or Elixir, you'd see a radical difference.
+No improvement over `factorial2` or `factorial3`, but then (again) Python does not currently support tail recursion optimization. If you were to try this on a different language, e.g. OCaml or Elixir, you'd see a radical difference.
 
 Just wrapping it up, how could we do it on the Fibonacci sequence?
 
@@ -369,7 +369,7 @@ def fibonacci2c(n: int) -> int:
 fibonacci2c(30)
 ```
 
-    1.57 μs ± 9 ns per loop (mean ± std. dev. of 7 runs, 1,000,000 loops each)
+    1.45 μs ± 5.68 ns per loop (mean ± std. dev. of 7 runs, 1,000,000 loops each)
 
 
 
@@ -378,10 +378,120 @@ fibonacci2c(30)
 fibonacci2c(1000)
 ```
 
-    115 μs ± 761 ns per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
+    117 μs ± 296 ns per loop (mean ± std. dev. of 7 runs, 10,000 loops each)
 
 
 It's faster than the non-tail recursive function, not due to tail recursion optimization (non-existent in Python nowadays), but because it's avoiding duplicate calls (for `n-1` and `n-2`).
+
+## Python was not *perfectly* designed for functional programming
+
+Even with all current and future optimizations, functional programming in Python may look awkward. Let me illustrate this with an example.
+
+So many years ago, I was working on a financial application for a Fortune 100 company. Every single penny had to be accounted for. Whenever someone wanted to see a report, these are the steps the application had to follow:
+
+1. Get data from the right sources
+2. Consolidate it according to the rules
+3. Transform it per the requirements
+4. Present it to the user
+
+For the sake of this exercise, let's use the following functions to represent each step:
+
+
+```python
+def get_data(n: int) -> list[int]:
+    # makes up a list of numbers
+    return [x for x in range(n)]
+
+def consolidate(l: list[int]) -> int:
+    # sums the numbers
+    return sum(l)
+
+def transform(n: int, f: float) -> float:
+    # divides by a number
+    return n / f
+
+def present(f: float) -> str:
+    return f"Result is {f}"
+```
+
+Here's a simple way to run the report:
+
+
+```python
+def report1(volume: int, factor: float) -> None:
+    data = get_data(volume)
+    consolidated = consolidate(data)
+    transformed = transform(consolidated, factor)
+    print(present(transformed))
+
+report1(12, 2.5)
+```
+
+    Result is 26.4
+
+
+We can't allow for side effects, can we? Well… we have the potential for a few, nominally `data`, `consolidated`, and `transformed`. There's a way to guarantee they don't happen:
+
+
+```python
+def report2(volume: int, factor: float) -> None:
+    print(present(transform(consolidate(get_data(volume)), factor)))
+
+report2(12, 2.5)
+```
+
+    Result is 26.4
+
+
+The result is the same, therefore the calculation is correct, and there's no possibility of side effects…
+
+But there's a problem: the code is impossible to read. We can use tricks, such as splitting lines or adding whitespace, but if we misplace a comma or a parentheses, it's nearly impossible to catch. And by the way, we are forced to read the code from right to left.
+
+Fortunately, Python has a trick up its sleeve: the underscore operator. It can be used to indicate a value is temporary or insignificant, and it also contains the result of the last instruction.
+
+
+```python
+def report3(volume: int, factor: float) -> None:
+    _ = get_data(volume)
+    _ = consolidate(_)
+    _ = transform(_, factor)
+    _ = present(_)
+    print(_)
+
+report3(12, 2.5)
+```
+
+    Result is 26.4
+
+
+At the least, the code above is readable, easily maintained, and avoids side effects altogether.
+
+Some functional languages have operators to make this all even more palatable. For example, OCaml has an *application operator* and a *pipe operator*.
+
+``` ocaml
+# int_of_float (sqrt (float_of_int (int_of_string "81")));;
+- : int = 9
+```
+
+The `@@` application operator applies an argument (on the right) to a function (on the left). It is useful when chaining several calls, as it avoids writing parentheses, which creates easier-to-read code.[^5]
+
+``` ocaml
+# int_of_float @@ sqrt @@ float_of_int @@ int_of_string "81";;
+- : int = 9
+```
+
+The `|>` pipe operator also avoids parentheses but in reversed order: function on right, argument on left.
+
+``` ocaml
+# "81" |> int_of_string |> float_of_int |> sqrt |> int_of_float;;
+- : int = 9
+```
+
+We can find the pipe operator in other languages too, such as Elixir and R.
+
+The tricks we have at our disposal do the deed, but they tend to be a waste of brain power. Let's hope that future versions will include such operators.
+
+[^5]: Source: [OCaml: Values and Functions](https://ocaml.org/docs/values-and-functions)
 
 ## Functional programming is not perfect
 
@@ -618,7 +728,7 @@ In many programming languages, no code outside of an enclosing class has any vis
 
 ## The Golden Hammer antipattern
 
-The Golden Hammer antipattern permeates from a development team's overreliance on a single tool set, pattern, platform, or other component of the development workflow. It is a classic pitfall that any team faces when they have gained some level of expertise in a particular solution or methodology. This antipattern is appropriately summarized using the following adage: "When all you have is a hammer, everything looks like a nail."[^5]
+The Golden Hammer antipattern permeates from a development team's overreliance on a single tool set, pattern, platform, or other component of the development workflow. It is a classic pitfall that any team faces when they have gained some level of expertise in a particular solution or methodology. This antipattern is appropriately summarized using the following adage: "When all you have is a hammer, everything looks like a nail."[^6]
 
 One of the main advantages of functional programming is its simplicity. Given the same results for the same inputs, and given there are no side effects, it's easy to debug. Resource consumption and execution time may be issues and must be taken into account. In my past experience as a software engineer, however, I should say that only in rare occasions I dealt with deep recursion levels. The most notable case was so many years ago, when I had to look up data in a hierarchical data structure. Resources were at a premium and my program was crashing at random intervals. My very talented data architect came to the rescue, creating a new database view for me, and my problems went away.
 
@@ -628,7 +738,7 @@ There are purely declarative programming languages. Likewise, there are purely i
 
 There are, nonetheless, multiparadigm programming languages. You'll have the option to choose how to write your code. Against the Golden Hammer antipattern, remember that you have multiple tools and techniques at your disposal, so do yourself a favor and choose the best one for solving the problem at hand.
 
-[^5]: Source: [TechTarget: Signs of a Golden Hammer antipattern, and 5 ways to avoid it](https://www.techtarget.com/searchapparchitecture/tip/Signs-of-a-Golden-Hammer-antipattern-and-ways-to-avoid-it)
+[^6]: Source: [TechTarget: Signs of a Golden Hammer antipattern, and 5 ways to avoid it](https://www.techtarget.com/searchapparchitecture/tip/Signs-of-a-Golden-Hammer-antipattern-and-ways-to-avoid-it)
 
 ---
 
@@ -641,5 +751,6 @@ There are, nonetheless, multiparadigm programming languages. You'll have the opt
 5. 2025-04-28: Spell check.
 6. 2025-10-13: Tail recursion.
 7. 2025-10-14: Minor cleanup.
+8. 2026-02-17: Application and pipe operators.
 
 ---
