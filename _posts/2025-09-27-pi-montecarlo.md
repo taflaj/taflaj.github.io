@@ -4,7 +4,7 @@ title:  "Monte Carlo experiments and the value of π"
 categories: technology programming montecarlo statistics math
 excerpt_separator: <!--more-->
 date: 2025-09-27
-last_modified_at: 2026-02-16
+last_modified_at: 2026-02-20
 ---
 [![pi-montecarlo](/assets/images/pi-montecarlo.jpeg)](/pi-montecarlo/)
 <div style="font-size: 0.8em; text-align: right">Image source: ChatGPT</div>
@@ -181,7 +181,7 @@ fn main() raises -> None:
     print(inside * 4 / n)
 ```
 
-The optimization is using `fn` instead of `def`, which instructs the compiler to use Mojo mode. The other changes are just to comply with the Mojo syntax.
+The optimization is to use `fn` instead of `def`, which instructs the compiler to use Mojo mode. The other changes are just to comply with the Mojo syntax.
 
 How did it perform? Much better than pure Python, but Numba is still giving Python an edge. If I had a GPU I could report better numbers, but I don't have one, ergo I can't. Perhaps you can?
 
@@ -236,9 +236,31 @@ let () =
   Printf.printf "%f\n" pi
 ```
 
-This is very subjective (I know), but in my humble opinion, OCaml is very pretty.
+This is very subjective (I know), but in my humble opinion, OCaml is a very beautiful language.
 
 Please see the results down below.
+
+### Julia
+
+In [another article](/julia/) I talk about Julia in more detail, but in short, it's a dynamic multi-paradigm general-purpose programming language with some pretty cool features geared toward engineering and data science. Here's the program I'm using for the same:
+
+``` julia
+is_inside(x ::Float64, y ::Float64) = x*x + y*y <= 1.0
+
+function calculate(iterations ::Int)
+    inside = 1
+    for i in 1:iterations
+        if is_inside(rand(), rand())
+            inside += 1
+        end
+    end
+    return inside * 4.0 / iterations
+end
+
+print(calculate(100_000_000))
+```
+
+Much to my surprise, or perhaps not at all, it's the first one to consistently perform in less than one second.
 
 ### C
 
@@ -285,6 +307,7 @@ In alphabetical order, this is how the different languages and tools performed. 
 | C | 100M | 1.628 |
 | Go with `math/rand` | 100M | 1.479 |
 | Go with `math/rand/v2` | 100M | 1.106 |
+| Julia | 100M | 0.567 |
 | Mojo | 100M | 3.878 |
 | OCaml functional | 100M | 1.815 |
 | OCaml imperative | 100M | 1.834 |
@@ -295,9 +318,11 @@ In alphabetical order, this is how the different languages and tools performed. 
 | Python 3.14 with `random` | 100M | 10.542 |
 | Python 3.14 with `secrets`| 100M | 77.705 |
 
-Please note: this is not a comprehensive, all inclusive, thorough benchmark. Instead, it's just a use case. An example. Should it influence you when deciding what to use on your next major project? I'll leave it at your discretion. Is it going to influence me? Not at all! There are several factors to be considered when choosing a programming language, where performance and resource consumption should be on the top of the list, with mainstream adoption as a close third. I've left Zig off the list because it's not mature enough, at least for me, but included Mojo because there's a parade of geeks pushing for its adoption and I wanted to see how it compares. I'm not impressed, to be honest. Someone has said that Julia is a strong contender because, just like Python, it allows for thorough modeling but delivering better performance; I'll save it for an upcoming revision.
+Please note: this is not a comprehensive, all inclusive, thorough benchmark. Instead, it's just a use case. An example. Should it influence you when deciding what to use on your next major project? I'll leave it at your discretion. Is it going to influence me? Not at all! There are several factors to be considered when choosing a programming language, where performance and resource consumption should be on the top of the list, with mainstream adoption as a close third. I've left Zig off the list because it's not mature enough, at least for me, but included Mojo because there's a parade of geeks pushing for its adoption and I wanted to see how it compares. I'm not impressed, to be honest, and Julia far exceeded my expectations.
 
 Meanwhile, my preferences are still (in no particular order) Go, OCaml, and Python.
+
+But something tells me I would be adding Julia to my list in no time.
 
 ---
 
@@ -306,6 +331,7 @@ Meanwhile, my preferences are still (in no particular order) Go, OCaml, and Pyth
 1. 2025-09-27: Original posting date.
 2. 2025-10-08: Speeding up Python; Mojo.
 3. 2026-02-16: Python 3.14; C; OCaml.
+4. 2026-02-20: Julia.
 
 ---
 
