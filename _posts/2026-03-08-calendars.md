@@ -32,7 +32,7 @@ Most of which are still in use.
 
 ### Julian calendar
 
-The [Julian calendar](https://en.wikipedia.org/wiki/Julian_calendar) was proposed by Julius Caesar himself (hence the name) and took effect on 1 of January, 45 bCE, having prevailed for more than 1,600 years in the Roman Empire and most of the Western world. Because each year is approximately 365¼ days long, there are 3 years with 365 days and one with 366, for which an extra day in February is added.
+The [Julian calendar](https://en.wikipedia.org/wiki/Julian_calendar) was proposed by Julius Caesar himself (hence the name) and took effect on 1 of January, 45 b.C.E., having prevailed for more than 1,600 years in the Roman Empire and most of the Western world. Because each year is approximately 365¼ days long, there are 3 years with 365 days and one with 366, for which an extra day in February is added.
 
 But there is a problem: the year is *approximately* 365¼ days long, but not **precisely**. Actually, it's a bit shorter than that. Science doesn't care for our preconceptions and continues to do its thing. With time, people began to realize the seasons were changing when they were not expected, just like the lengths of days and nights. That's because the Julian calendar gains one day every 128 years.
 
