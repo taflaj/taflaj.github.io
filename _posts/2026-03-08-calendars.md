@@ -4,7 +4,7 @@ title:  "Calendars, calendars, calendars everywhere"
 categories: calendars calculations
 excerpt_separator: <!--more-->
 date: 2026-03-08
-last_modified_at: 2026-03-11
+last_modified_at: 2026-03-12
 ---
 [![calendars](/assets/images/calendars.png)](/calendars/)
 <div style="font-size: 0.8em; text-align: right">Image source: Gemini</div>
@@ -14,6 +14,8 @@ This article was initially published on International Women's Day in 2026. That 
 Or was it 19 of Adar I, 5786? Maybe 23 of February, 2026? Perhaps 19 of Ramadan, 1447?
 
 Actually, **all of the above**!
+
+And also 2026-W10-7.
 <!--more-->
 
 ## In the beginning…
@@ -42,6 +44,16 @@ The Gregorian calendar follows the same principles as the Julian calendar, with 
 
 From 1901 through 2099, the Julian calendar is 13 days behind the Gregorian calendar.
 
+### ISO calendar
+
+The [ISO week date system](https://en.wikipedia.org/wiki/ISO_week_date) is part of the [ISO 8601](https://www.iso.org/standard/70908.html) date and time standard issued by the International Organization for Standardization. It indicates the year in the Gregorian calendar where Thursday falls, and also indicates the week and day numbers. Each year has 52 whole weeks, adding a 53rd whole week for when the Gregorian year contains 53 Thursdays. Why this obsession with Thursdays?
+
+That's because Thursday is right in the middle of the week, so the year that contains a Thursday also contains the majority of the week. It also means the first week of the year is the one that contains 4 of January on the Gregorian calendar. As you can expect, ISO and Gregorian years may not be the same for dates close to 1 of January.
+
+The first day of the week is Monday (day 1) and the last one is Sunday (day 7).
+
+Dates are represented with 4 digits for the year, followed by a `W` and 2 digits for the week, and the day at the end. Optionally there can be dashes to the left of the `W` and of the day to make it more readable.
+
 ## In the end…
 
 Some people say, "it's 5 o'clock somewhere" as an excuse to drink wine any time. I'm sure there exist more calendars than I'm accounting for, which means it must be my birthday somewhere. I'll have some cake.
@@ -53,6 +65,7 @@ Some people say, "it's 5 o'clock somewhere" as an excuse to drink wine any time.
 1. 2026-03-08: Original posting date.
 2. 2026-03-09: Julian and Gregorian calendars.
 3. 2026-03-11: A few corrections.
+4. 2026-03-12: ISO calendar.
 
 Note: all dates are on the Gregorian calendar.
 
