@@ -24,7 +24,7 @@ It all started a few months ago, when someone at the synagogue asked what day is
 
 All my life I've been celebrating Jewish holidays in different days on the civil calendar. Same with my Muslim friends, who celebrate (among other important events) Ramadan (beginning 18 of February, 2026) and Eid al-Fitr (19 of March, 2026) in different days, and my Indian friends, with their holidays and festivals as well. Recently, I realized my Orthodox friends were not celebrating Christmas on 25 of December, but 7 of January of the following year.
 
-In this article, I'm exploring the different calendars actually being used nowadays. In parallel, I'm building an Elixir library ([source on Codeberg](https://codeberg.org/taflaj/calendars)) with the calculations to convert from one to another.
+In this article, I'm exploring the different calendars actually being used nowadays. In parallel, I'm building an Elixir library ([source on Codeberg](https://codeberg.org/taflaj/yaeccl)) with the calculations to convert from one to another.
 
 ## A multitude of calendars
 
