@@ -4,7 +4,7 @@ title:  "Monte Carlo experiments and the value of π"
 categories: technology programming montecarlo statistics math
 excerpt_separator: <!--more-->
 date: 2025-09-27
-last_modified_at: 2026-02-20
+last_modified_at: 2026-03-19
 ---
 [![pi-montecarlo](/assets/images/pi-montecarlo.jpeg)](/pi-montecarlo/)
 <div style="font-size: 0.8em; text-align: right">Image source: ChatGPT</div>
@@ -187,7 +187,7 @@ How did it perform? Much better than pure Python, but Numba is still giving Pyth
 
 ### OCaml
 
-Due to professional reasons, I've been studying OCaml recently. In case you've never heard of it, it's geared towards functional programming, but it also allows for imperative programming. I'm using this double nature to measure its performance.
+Out of pure curiosity, I've been studying OCaml recently. In case you've never heard of it, it's geared towards functional programming, but it also allows for imperative programming. I'm using this double nature to measure its performance.
 
 I'm not bothering exploring command line arguments and am hard coding 100 million iterations. The first example follows an imperative approach, which is more palatable for so many programmers.
 
@@ -236,7 +236,7 @@ let () =
   Printf.printf "%f\n" pi
 ```
 
-This is very subjective (I know), but in my humble opinion, OCaml is a very beautiful language.
+This is very subjective (I know), but in my humble opinion, OCaml is a very beautiful language. Sadly, it only fits a very specific niche, mostly academic.
 
 Please see the results down below.
 
@@ -261,6 +261,50 @@ print(calculate(100_000_000))
 ```
 
 Much to my surprise, or perhaps not at all, it's the first one to consistently perform in less than one second.
+
+### Elixir
+
+[Elixir](https://elixir-lang.org/) is a functional, concurrent, high-level general-purpose programming language created by my fellow Brazilian José Valim in 2012 that runs on the [BEAM virtual machine](https://en.wikipedia.org/wiki/BEAM_(Erlang_virtual_machine)), which is also used to implement the [Erlang programming language](https://www.erlang.org/). Elixir builds on top of Erlang and shares the same abstractions for building distributed, fault-tolerant applications. Elixir also provides tooling and an extensible design. The latter is supported by compile-time metaprogramming with macros and polymorphism via protocols.
+
+``` elixir
+defmodule Montecarlo do
+  def pi(iterations) do
+    calculate(iterations, 0) * 4 / iterations
+  end
+
+  defp calculate(count, sum) do
+    if count == 0 do
+      sum
+    else
+      x = :rand.uniform()
+      y = :rand.uniform()
+      inside = if x * x + y * y <= 1.0, do: 1, else: 0
+      calculate(count - 1, sum + inside)
+    end
+  end
+end
+
+defmodule Montecarlo.CLI do
+  def main(args \\ []) do
+    args |> parse() |> Montecarlo.pi() |> IO.puts()
+  end
+
+  defp parse(args) do
+    try do
+      args |> hd |> String.to_integer()
+    rescue
+      _ in ArgumentError ->
+        100_000_000
+    end
+  end
+end
+```
+
+Please feel free to see [my repo](https://codeberg.org/taflaj/montecarlo) for the full source code.
+
+From a timing perspective, Elixir shares a disadvantage with Java (not included in this article): before the program can run, it must first launch its virtual machine and verify the code. Python works almost the same way, interpreting the pre-compiled code instead of launching a virtual machine. Just keep in mind that Elixir is not tailored for desktop applications (although it does run on desktops with BEAM installed); instead, it's better for servers.
+
+But I'm stubborn. The beauty of Elixir (and Erlang, for that matter) is that fault tolerance is implemented by BEAM, so you don't have to worry about it in your application. The price is poorer performance. Pick your poison.
 
 ### C
 
@@ -305,6 +349,7 @@ In alphabetical order, this is how the different languages and tools performed. 
 | Name | Iterations | Sample Duration (seconds) |
 | :--- | :---: | ---: |
 | C | 100M | 1.628 |
+| Elixir | 100M | 10.487 |
 | Go with `math/rand` | 100M | 1.479 |
 | Go with `math/rand/v2` | 100M | 1.106 |
 | Julia | 100M | 0.567 |
@@ -320,9 +365,9 @@ In alphabetical order, this is how the different languages and tools performed. 
 
 Please note: this is not a comprehensive, all inclusive, thorough benchmark. Instead, it's just a use case. An example. Should it influence you when deciding what to use on your next major project? I'll leave it at your discretion. Is it going to influence me? Not at all! There are several factors to be considered when choosing a programming language, where performance and resource consumption should be on the top of the list, with mainstream adoption as a close third. I've left Zig off the list because it's not mature enough, at least for me, but included Mojo because there's a parade of geeks pushing for its adoption and I wanted to see how it compares. I'm not impressed, to be honest, and Julia far exceeded my expectations.
 
-Meanwhile, my preferences are still (in no particular order) Go, OCaml, and Python.
+Meanwhile, my preferences are still (in no particular order) Go, Elixir, and Python.
 
-But something tells me I would be adding Julia to my list in no time.
+But something tells me I might be adding Julia to my list in no time.
 
 ---
 
@@ -332,6 +377,7 @@ But something tells me I would be adding Julia to my list in no time.
 2. 2025-10-08: Speeding up Python; Mojo.
 3. 2026-02-16: Python 3.14; C; OCaml.
 4. 2026-02-20: Julia.
+5. 2026-03-19: Elixir.
 
 ---
 
