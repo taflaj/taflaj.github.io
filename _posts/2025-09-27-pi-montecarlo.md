@@ -4,7 +4,7 @@ title:  "Monte Carlo experiments and the value of π"
 categories: technology programming montecarlo statistics math
 excerpt_separator: <!--more-->
 date: 2025-09-27
-last_modified_at: 2026-03-19
+last_modified_at: 2026-03-20
 ---
 [![pi-montecarlo](/assets/images/pi-montecarlo.jpeg)](/pi-montecarlo/)
 <div style="font-size: 0.8em; text-align: right">Image source: ChatGPT</div>
@@ -300,6 +300,25 @@ defmodule Montecarlo.CLI do
 end
 ```
 
+The major difficulty, when learning a new programming language, is not the learning itself, but to start thinking in terms of the language. For instance, imperative languages have a `for` statement that allows you, among other things, to iterate over a list. Functional languages **do not**. You can use recursion, like above.
+
+Elixir provides plenty of tools for iterating over a list. The `Enum` module is very rich. By leveraging some of its functions, the code can be made easier to read, just like below. And how did it perform? I'll let the numbers speak for themselves.
+
+``` elixir
+defmodule Montecarlo do
+  def pi(iterations) do
+    inside =
+      1..iterations
+      |> Enum.map(fn _ -> random_point() end)
+      |> Enum.count(fn {x, y} -> x * x + y * y <= 1.0 end)
+
+    4.0 * inside / iterations
+  end
+
+  defp random_point(), do: {:rand.uniform(), :rand.uniform()}
+end
+```
+
 Please feel free to see [my repo](https://codeberg.org/taflaj/montecarlo) for the full source code.
 
 From a timing perspective, Elixir shares a disadvantage with Java (not included in this article): before the program can run, it must first launch its virtual machine and verify the code. Python works almost the same way, interpreting the pre-compiled code instead of launching a virtual machine. Just keep in mind that Elixir is not tailored for desktop applications (although it does run on desktops with BEAM installed); instead, it's better for servers.
@@ -349,7 +368,8 @@ In alphabetical order, this is how the different languages and tools performed. 
 | Name | Iterations | Sample Duration (seconds) |
 | :--- | :---: | ---: |
 | C | 100M | 1.628 |
-| Elixir | 100M | 10.487 |
+| Elixir iterative | 100M | 35.640 |
+| Elixir recursive | 100M | 10.487 |
 | Go with `math/rand` | 100M | 1.479 |
 | Go with `math/rand/v2` | 100M | 1.106 |
 | Julia | 100M | 0.567 |
@@ -363,9 +383,17 @@ In alphabetical order, this is how the different languages and tools performed. 
 | Python 3.14 with `random` | 100M | 10.542 |
 | Python 3.14 with `secrets`| 100M | 77.705 |
 
-Please note: this is not a comprehensive, all inclusive, thorough benchmark. Instead, it's just a use case. An example. Should it influence you when deciding what to use on your next major project? I'll leave it at your discretion. Is it going to influence me? Not at all! There are several factors to be considered when choosing a programming language, where performance and resource consumption should be on the top of the list, with mainstream adoption as a close third. I've left Zig off the list because it's not mature enough, at least for me, but included Mojo because there's a parade of geeks pushing for its adoption and I wanted to see how it compares. I'm not impressed, to be honest, and Julia far exceeded my expectations.
+#### Ranting
 
-Meanwhile, my preferences are still (in no particular order) Go, Elixir, and Python.
+This is not a comprehensive, all inclusive, thorough benchmark. Instead, it's just a use case. An example. Nothing else.
+
+Should it influence you when deciding what to use on your next major project? I'll leave it at your discretion. Is it going to influence me? Not at all! There are several factors to be considered when choosing a programming language, where performance and resource consumption should be on the top of the list, with mainstream adoption as a close third. I've left Zig off the list because it's not mature enough, at least for me, but included Mojo because there's a parade of geeks pushing for its adoption and I wanted to see how it compares. I'm not impressed, to be honest, and Julia far exceeded my expectations.
+
+I've heard that Object Oriented Programming is a waste of brain power. OOP advocates claim that data needs structure and deserves behavior. I believe the real value is not in inheritance, but in messaging, meaning how you interact with objects.
+
+I've also heard that Functional Programming is another waste of brain power, mostly due to immutability and lack of loops. My response to that is: isn't predictability and consistency worth the effort? For me, it's not a waste of brain power, but an investment. I'd rather burn my neurons figuring out how to make it work instead of wondering why it suddenly stopped working.
+
+Meanwhile, my preferences are still (in no particular order) Go (for speed), Elixir (for robustness), and Python (for flexibility).
 
 But something tells me I might be adding Julia to my list in no time.
 
@@ -378,6 +406,7 @@ But something tells me I might be adding Julia to my list in no time.
 3. 2026-02-16: Python 3.14; C; OCaml.
 4. 2026-02-20: Julia.
 5. 2026-03-19: Elixir.
+6. 2026-03-20: Elixir refactored.
 
 ---
 
