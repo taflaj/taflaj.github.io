@@ -4,7 +4,7 @@ title:  "Monte Carlo experiments and the value of π"
 categories: technology programming montecarlo statistics math
 excerpt_separator: <!--more-->
 date: 2025-09-27
-last_modified_at: 2026-03-20
+last_modified_at: 2026-06-15
 ---
 [![pi-montecarlo](/assets/images/pi-montecarlo.jpeg)](/pi-montecarlo/)
 <div style="font-size: 0.8em; text-align: right">Image source: ChatGPT</div>
@@ -325,6 +325,49 @@ From a timing perspective, Elixir shares a disadvantage with Java (not included 
 
 But I'm stubborn. The beauty of Elixir (and Erlang, for that matter) is that fault tolerance is implemented by BEAM, so you don't have to worry about it in your application. The price is poorer performance. Pick your poison.
 
+### Java
+
+Java has been around for longer than so many people have been alive, yet it's still a modern, powerful, and simple language, even though it may be considered verbose.
+
+When I was a professional developer, it used to be my favorite programming language, but then I became a project manager and left programming aside. Regardless, I did have the privilege of managing lots of projects where Java and its digital ecosystem was the tool of choice. I must also say that Project Management is what I do, but Software Engineering is what defines me.
+
+``` java
+import java.util.Random;
+
+public class Example1 {
+
+    public static double calculate(int iterations) {
+        Random random = new Random();
+        long inside = 0;
+
+        for (int i = 0; i < iterations; i++) {
+            double x = random.nextDouble();
+            double y = random.nextDouble();
+
+            if (x * x + y * y <= 1) {
+                inside++;
+            }
+        }
+
+        return (4.0 * inside) / iterations;
+    }
+
+    public static void main(String[] args) {
+        int iterations = 100_000_000;
+        System.out.printf(
+            "Estimated value of π: %.10f%n",
+            calculate(iterations)
+        );
+    }
+}
+```
+
+From a performance standpoint, it was okay. Not good. Not bad either. Just okay.
+
+One may wonder: why is it still in use? Java can be used for developing desktop applications, maybe even command line applications, and it will do exactly as told. No surprises. Even better, when you copy the executable file from one computer to another, no matter the architecture or the operating system, it will run without any changes, provided you're not using any specific underlying services. That's one of the premises of Java: [write once, run everywhere](https://en.wikipedia.org/wiki/Write_once,_run_anywhere).
+
+Remember that JVM, the virtual machine that runs Java programs, must first assess the binary file, compile it to machine language, and then run it, which takes significant time. As a standalone application, it really can't have a great performance, but as a service, it's magical! I remember very well that, not too long ago, I wrote a backend service in Java, and then rewrote it in VB.net just to comply with certain corporate directions. And because I was already at it, I rewrote it in C, just because I could. Much to my surprise, or maybe not at all, Java outperformed them all. It would be interesting if I could try Go and see how it goes.
+
 ### C
 
 Let's have a formal baseline!
@@ -372,6 +415,7 @@ In alphabetical order, this is how the different languages and tools performed. 
 | Elixir recursive | 100M | 10.487 |
 | Go with `math/rand` | 100M | 1.479 |
 | Go with `math/rand/v2` | 100M | 1.106 |
+| Java | 100M | 3.933 |
 | Julia | 100M | 0.567 |
 | Mojo | 100M | 3.878 |
 | OCaml functional | 100M | 1.815 |
@@ -407,6 +451,7 @@ But something tells me I might be adding Julia to my list in no time.
 4. 2026-02-20: Julia.
 5. 2026-03-19: Elixir.
 6. 2026-03-20: Elixir refactored.
+7. 2026-06-15: Java.
 
 ---
 
