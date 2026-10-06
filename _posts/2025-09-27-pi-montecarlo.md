@@ -4,7 +4,7 @@ title:  "Monte Carlo experiments and the value of π"
 categories: technology programming montecarlo statistics math
 excerpt_separator: <!--more-->
 date: 2025-09-27
-last_modified_at: 2026-06-15
+last_modified_at: 2026-10-05
 ---
 [![pi-montecarlo](/assets/images/pi-montecarlo.jpeg)](/pi-montecarlo/)
 <div style="font-size: 0.8em; text-align: right">Image source: ChatGPT</div>
@@ -404,6 +404,40 @@ int main(const int argc, const char *argv[]) {
 
 Before you check the table below, let me spoil the surprise: Go ran faster than C! Less than 10% faster, yet faster nonetheless.
 
+### Rust
+
+There's a new kid on the block, and its name is [Rust](https://rust-lang.org/). It has been around long enough to deserve a sweet spot in the heart of most developers. One of its most significant features has to do with memory management, alerting the programmer that a given operation is violating variable usage privileges at compile time. This means that such a violation is caught early on (instead of hours, days, weeks, months, or maybe even years later). As a result, it's very safe.
+
+The full source code is in [my repo](https://codeberg.org/taflaj/yams) for you to see at your leisure. Here's the main part.
+
+``` rust
+use std::env;
+
+use rand::{RngExt, SeedableRng, rngs::SmallRng};
+
+fn main() {
+    let iterations: u64 = env::args()
+        .nth(1)
+        .and_then(|s| s.parse().ok())
+        .unwrap_or(100_000_000);
+    let mut rng = SmallRng::from_rng(&mut rand::rng());
+    let mut inside = 0u64;
+    for _ in 0..iterations {
+        let x: f64 = rng.random();
+        let y: f64 = rng.random();
+        if x * x + y * y <= 1.0 {
+            inside += 1;
+        }
+    }
+    let estimate = 4.0 * inside as f64 / iterations as f64;
+    println!("{estimate}");
+}
+```
+
+By default, Rust compiles in debugging mode, incorporating all sorts of controls into the code. That's awesome during development, provided the test cases have sufficient coverage. Once the code is validated, it can then be recompiled in release mode, where all the checks are removed. Sample timings for both modes are listed on the table below.
+
+Here's yet another spoiler: Rust was the fastest of all. It even made it possible to use one million iterations instead of the default, but the calculated value of π was still far from the actual, or at least no better than 22÷7.
+
 ### Comparison
 
 In alphabetical order, this is how the different languages and tools performed. I'm omitting the calculated value of π because, for this exercise, it has become irrelevant.
@@ -426,6 +460,8 @@ In alphabetical order, this is how the different languages and tools performed. 
 | Python 3.14 with Numba | 100M | 2.108 |
 | Python 3.14 with `random` | 100M | 10.542 |
 | Python 3.14 with `secrets`| 100M | 77.705 |
+| Rust debug | 100M | 2.676 |
+| Rust release | 100M | 0.285 |
 
 #### Ranting
 
@@ -439,7 +475,7 @@ I've also heard that Functional Programming is another waste of brain power, mos
 
 Meanwhile, my preferences are still (in no particular order) Go (for speed), Elixir (for robustness), and Python (for flexibility).
 
-But something tells me I might be adding Julia to my list in no time.
+But something tells me I might be adding Julia to my list and replacing Go with Rust in no time.
 
 ---
 
@@ -452,6 +488,7 @@ But something tells me I might be adding Julia to my list in no time.
 5. 2026-03-19: Elixir.
 6. 2026-03-20: Elixir refactored.
 7. 2026-06-15: Java.
+8. 2026-10-05: Rust.
 
 ---
 
