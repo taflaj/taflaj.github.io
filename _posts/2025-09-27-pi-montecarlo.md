@@ -436,7 +436,7 @@ fn main() {
 
 By default, Rust compiles in debugging mode, incorporating all sorts of controls into the code. That's awesome during development, provided the test cases have sufficient coverage. Once the code is validated, it can then be recompiled in release mode, where all the checks are removed. Sample timings for both modes are listed on the table below.
 
-Here's yet another spoiler: Rust was the fastest of all. It even made it possible to use one million iterations instead of the default, but the calculated value of π was still far from the actual, or at least no better than 22÷7.
+Here's yet another spoiler: Rust was the fastest of all. It even made it possible to use one billion iterations instead of the default, but the calculated value of π was still far from the actual, or at least no better than 22÷7.
 
 ### Comparison
 
