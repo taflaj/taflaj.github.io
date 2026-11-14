@@ -4,7 +4,7 @@ title:  "Monte Carlo experiments and the value of π"
 categories: technology programming montecarlo statistics math
 excerpt_separator: <!--more-->
 date: 2025-09-27
-last_modified_at: 2026-10-05
+last_modified_at: 2026-11-13
 ---
 [![pi-montecarlo](/assets/images/pi-montecarlo.jpeg)](/pi-montecarlo/)
 <div style="font-size: 0.8em; text-align: right">Image source: ChatGPT</div>
@@ -209,7 +209,7 @@ let () =
   Printf.printf "%f\n" pi
 ```
 
-The next example follows a functional approach to appease the purists and myself.
+The next example follows a functional and recursive approach to appease the purists and myself.
 
 ``` ocaml
 let calculate number =
@@ -236,7 +236,48 @@ let () =
   Printf.printf "%f\n" pi
 ```
 
-This is very subjective (I know), but in my humble opinion, OCaml is a very beautiful language. Sadly, it only fits a very specific niche, mostly academic.
+This is very subjective (I know), but in my humble opinion, OCaml is a very beautiful language. Sadly, it only fits a very specific niche, mostly academic. I'm surprised, however, to see OCaml above Haskell, Elixir, and Erlang on the [TIOBE index](https://www.tiobe.com/tiobe-index/) for November 2026. This inspired me to pursue a few additional best practices.
+
+The next example uses `Seq` from the standard library, with no explicit recursion and no mutable state in the code.
+
+``` ocaml
+let estimate_pi n =
+  let random_point () = (Random.float 1.0, Random.float 1.0) in
+  let inside =
+    Seq.ints 0
+    |> Seq.take n
+    |> Seq.map (fun _ -> random_point ())
+    |> Seq.filter (fun (x, y) -> x *. x +. y *. y <= 1.0)
+    |> Seq.length
+  in
+  4.0 *. float_of_int inside /. float_of_int n
+
+let () =
+  Random.self_init ();
+  let n = 1_000_000 in
+  Printf.printf "Estimated pi with %d samples: %f\n" n (estimate_pi n)
+```
+
+Finally, the next example uses a fold, which is the classic functional approach.
+
+``` ocaml
+let estimate_pi n =
+  let inside =
+    Seq.ints 0
+    |> Seq.take n
+    |> Seq.fold_left
+         (fun acc _ ->
+           let x = Random.float 1.0 and y = Random.float 1.0 in
+           if x *. x +. y *. y <= 1.0 then acc + 1 else acc)
+         0
+  in
+  4.0 *. float_of_int inside /. float_of_int n
+
+let () =
+  Random.self_init ();
+  let n = 1_000_000 in
+  Printf.printf "Estimated pi with %d samples: %f\n" n (estimate_pi n)
+```
 
 Please see the results down below.
 
@@ -452,8 +493,10 @@ In alphabetical order, this is how the different languages and tools performed. 
 | Java | 100M | 3.933 |
 | Julia | 100M | 0.567 |
 | Mojo | 100M | 3.878 |
-| OCaml functional | 100M | 1.815 |
-| OCaml imperative | 100M | 1.834 |
+| OCaml recursive | 100M | 1.824 |
+| OCaml imperative | 100M | 1.821 |
+| OCaml using `Seq` | 100M | 2.954 |
+| OCaml with fold | 100M | 2.401 |
 | Python 3.13 with Numba | 100M | 1.902 |
 | Python 3.13 with `random` | 100M | 9.265 |
 | Python 3.13 with `secrets`| 100M | 100.849 |
@@ -489,6 +532,7 @@ But something tells me I might be adding Julia to my list and replacing Go with 
 6. 2026-03-20: Elixir refactored.
 7. 2026-06-15: Java.
 8. 2026-10-05: Rust.
+9. 2026-11-13: OCaml refactoring.
 
 ---
 

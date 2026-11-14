@@ -1,5 +1,5 @@
-(* bin/mail.ml *)
-(* functional mode *)
+(* bin/main.ml *)
+(* recursive mode *)
 
 let calculate number =
   let rec loop i inside =
