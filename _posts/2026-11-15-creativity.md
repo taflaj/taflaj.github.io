@@ -5,10 +5,10 @@ categories: technology programming creativity linux ai artificial-intelligence
 excerpt_separator: <!--more-->
 date: 2026-11-15
 ---
-[![creativity](/assets/images/annoyed.jpeg)](/creativity/)
-<div style="font-size: 0.8em; text-align: right">Image source: Copilot</div>
+[![creativity](/assets/images/frustrated.jpg)](/creativity/)
+<div style="font-size: 0.8em; text-align: right">Image source: Nano Banana</div>
 
-Phrases like "I don't like this" and "there must be another way" often lead us to using one of our most valuable assets: creativity.
+Phrases like "I don't like this" and "there must be a better way" often lead us to using one of our most valuable assets: creativity.
 <!--more-->
 
 ## The nature of my conundrum
@@ -49,6 +49,8 @@ Waybar and Quickshell, on the other hand, only read the configuration file durin
 
 By eliminating configuration files, you're required to modify the source code, but you know that the code only does what you want and nothing else. No overhead. No logic to read configuration files. No unwanted features.
 
+And then there's the human error. More than once I've seen system administrators crashing servers just because, on a configuration file, they typed `ture` instead of `true`. When an application finds an invalid configuration file, what does it do: crash or run with defaults? Anything the user doesn't expect. If you make such a mistake on a source file, the compiler rejects it, so you know there's a mistake and can fix it on time.
+
 **Simple programming with minimum overhead!** Waybar and Quickshell are written in C++. I'm cool with that, but I don't really *like* C++. This is subjective, but despite its power, I think it's *ugly*.
 
 I really like OCaml, but it's a niche language and doesn't have all the bindings I need. I also love Elixir, but having to instantiate a super virtual machine like Beam brings a lot of overhead. An easier alternative could be Haskell ([xmonad](https://xmonad.org/) is a tiling window manager completely built in Haskell which doesn't use configuration files either) but, by doing so, I'd be alienating a number of colleagues.
@@ -59,7 +61,7 @@ What's left? Rust and Go.
 
 ### Public enemy #1
 
-In order to find a suitable solution, I had to do extensive research on each language toolkits, libraries, bindings, et al. For Rust, I evaluated `iced` and `gtk-rs`, especially `iced_exwlshell` for building GTK layer shell applications. On the Go side, I evaluated `gotk4` and `Fyne`, wrapping up with `gotk4-layer-shell`. The thing is that, to build a top bar, you need to go down the GTK4 layer shell. It may sound complicated, but with the right bindings, all you have to do is instantiate a GTK4 layer shell and command it through its API.
+In order to find a suitable solution, I had to do extensive research on each language toolkits, libraries, bindings, et al. For Rust, I evaluated `iced` and `gtk-rs`, especially `iced_exwlshell` for building GTK layer shell applications. On the Go side, I evaluated `gotk4` and `gio`, wrapping up with `gotk4-layer-shell`. The thing is that, to build a top bar, you need to go down the GTK4 layer shell. It may sound complicated, but with the right bindings, all you have to do is instantiate a GTK4 layer shell and command it through its API.
 
 Having decided on the technical stack, the next step was to build proofs of concept for Rust and Go. I wanted a top bar to interact with my active niri workspaces, display the battery charge level (showing it in red when it becomes critical), local time (constantly updated, obviously), and the system tray. My Waybar configuration is far more complex, though.
 
