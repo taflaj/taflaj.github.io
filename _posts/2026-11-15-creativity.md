@@ -92,7 +92,7 @@ Memory use is an issue. Debug mode in Rust is used only for development and test
 
 In absolute terms, however, it's debatable. As of this writing, other than web browsers, email client, and [Zed](https://zed.dev/) (my faithful IDE), while also ignoring system services, the worst memory hog I have is [Insync](https://www.insynchq.com/), which I use to keep my cloud and local files in sync. Everything else is using less memory than the Rust (release) prototype.
 
-And by the way, it's a prototype. It's not even the final working version that I'm making compatible with my Waybar setup.
+And by the way, it's a prototype! It's not even the final working version that I'm making compatible with my Waybar setup.
 
 But I don't believe in miracles. Even though Waybar is only consuming 41 MB, how much else is being consumed by its services and resources? The same question applies to the Rust and Go prototypes. Go and Rust both use static linking, in which all required libraries are included on the binary file, but C++ could either do static or dynamic linking, depending on the build process. For the latter, upon loading, the program loads the libraries it needs.
 
